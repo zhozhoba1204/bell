@@ -12,7 +12,7 @@ INSERT INTO User (
 
 INSERT INTO Document_info (
     doc_number, version, doc_date, doc_type, user_id)
-    VALUES (3315222555, 0, '14 APRIL 2001', 'Паспорт', 1);
+    VALUES (3315222555, 0, '14 APRIL 2001', 'Паспорт', 2);
 
 INSERT INTO Document_type (
     doc_type, version, doc_type)

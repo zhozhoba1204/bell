@@ -56,9 +56,9 @@ CREATE TABLE IF NOT EXISTS Citizenship (
     citizenship_code   VARCHAR(5)    NOT NULL     COMMENT 'Код страны',
     citizenship_name   VARCHAR(50)   NOT NULL     COMMENT 'Гражданство'
 );
+
 COMMENT ON TABLE Citizenship IS 'Гражданство';
 
--- CREATE INDEX IX_Person_House_Id ON Person_House (house_id); ???
 ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(id);
 
 ALTER TABLE Usr ADD FOREIGN KEY (office_id) REFERENCES Office(id);
