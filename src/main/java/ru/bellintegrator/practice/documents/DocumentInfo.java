@@ -1,21 +1,33 @@
 package ru.bellintegrator.practice.documents;
 
+import ru.bellintegrator.practice.user.model.User;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Version;
+import javax.persistence.OneToOne;
+import javax.persistence.FetchType;
+import javax.persistence.MapsId;
 
-import javax.persistence.*;
 
 @Entity
 @Table(name = "Document_info")
 public class DocumentInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "doc_number")
-    private String docNumber;
+    private Integer id;
 
     /**
      * Служебное поле hibernate
      */
     @Version
     private Integer version;
+
+    /**
+     * Номер документа
+     */
+    @Column(name = "doc_number")
+    private String docNumber;
 
     /**
      * Дата выдачи документа
@@ -28,6 +40,14 @@ public class DocumentInfo {
      */
     @Column(name = "doc_name")
     private String docName;
+
+    /**
+     * Ассоциация с классом User
+     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
+
     /**
      * Конструктор для hibernate
      */

@@ -1,7 +1,17 @@
 package ru.bellintegrator.practice.organizatrion.model;
 
-
-import javax.persistence.*;
+import ru.bellintegrator.practice.office.model.Office;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Version;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
+import java.util.List;
 
 /**
  * Организация
@@ -11,8 +21,8 @@ import javax.persistence.*;
 public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private Long id;
+    @Column(name = "id")
+    private Integer id;
 
     /**
      * Служебное поле hibernate
@@ -53,8 +63,20 @@ public class Organization {
     /**
      * Телефон
      */
-    @Column(name = "phone", length = 10, nullable = false)
+    @Column(name = "phone", length = 10)
     private String phone;
+
+    /**
+     * Статус активности
+     */
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    /**
+     * Список офисов
+     */
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "organization")
+    private List<Office> offices;
 
     /**
      * Конструктор для hibernate
@@ -62,19 +84,29 @@ public class Organization {
     public Organization() {
     }
 
-    /**
-     * Конструктор
-     */
-    public Organization(String name, String fullName, String inn, String kpp, String address, String phone) {
+    public Organization(String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;
         this.kpp = kpp;
         this.address = address;
         this.phone = phone;
+        this.isActive = isActive;
+    }
+    /**
+     * Конструктор
+     */
+    public Organization(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
+        this.name = name;
+        this.fullName = fullName;
+        this.inn = inn;
+        this.kpp = kpp;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -129,4 +161,20 @@ public class Organization {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    public List<Office> getOffices() {
+        return offices;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setOffices(List<Office> offices) {
+        this.offices = offices;
+    }
+
 }
