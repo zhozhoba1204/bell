@@ -16,7 +16,7 @@ INSERT INTO Usr (
 
 INSERT INTO Document_type (
     doc_name, version, doc_code)
-VALUES ('Паспорт', 0, '20');
+VALUES ('Паспорт', 0, 20);
 
 INSERT INTO Document_info (
     user_id, doc_number, version, doc_date, doc_name)
