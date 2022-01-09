@@ -38,18 +38,18 @@ CREATE TABLE IF NOT EXISTS Usr (
 COMMENT ON TABLE Usr IS 'Пользователь';
 
 CREATE TABLE IF NOT EXISTS Document_info (
-    user_id    INTEGER                  COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
-    version    INTEGER     NOT NULL     COMMENT 'Служебное поле hibernate',
-    doc_number VARCHAR(50) NOT NULL     COMMENT 'Номер документа',
-    doc_date   VARCHAR(50) NOT NULL     COMMENT 'Дата выдачи',
-    doc_name   VARCHAR(50) NOT NULL     COMMENT 'Наименование документа'
+    user_id    INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
+    version    INTEGER              COMMENT 'Служебное поле hibernate',
+    doc_number VARCHAR(50)          COMMENT 'Номер документа',
+    doc_date   VARCHAR(50)          COMMENT 'Дата выдачи',
+    doc_name   VARCHAR(50)          COMMENT 'Наименование документа'
 );
 COMMENT ON TABLE Document_info IS 'Данные документа';
 
 CREATE TABLE IF NOT EXISTS Document_type (
-    doc_name   VARCHAR(50)  NOT NULL     COMMENT 'Наименование документа'PRIMARY KEY ,
+    doc_name   VARCHAR(50)  NOT NULL     COMMENT 'Наименование документа' PRIMARY KEY ,
     version    INTEGER      NOT NULL     COMMENT 'Служебное поле hibernate',
-    doc_code   VARCHAR(2)   NOT NULL     COMMENT 'Код документа'
+    doc_code   INTEGER(2)   NOT NULL     COMMENT 'Код документа'
 );
 COMMENT ON TABLE Document_type IS 'Тип документа';
 
