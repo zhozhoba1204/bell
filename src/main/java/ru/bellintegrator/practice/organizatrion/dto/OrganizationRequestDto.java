@@ -6,4 +6,10 @@ public class OrganizationRequestDto {
     public String name;
     public String inn;
     public boolean isActive;
+
+    public OrganizationRequestDto(String name, String inn, boolean isActive) {
+        this.name = name;
+        this.inn = inn;
+        this.isActive = isActive;
+    }
 }
