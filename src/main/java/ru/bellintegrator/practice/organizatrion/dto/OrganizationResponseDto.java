@@ -14,8 +14,34 @@ public class OrganizationResponseDto {
         this.isActive = isActive;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public static OrganizationResponseDto getDtoFromOrganization(Organization organization){
 return new OrganizationResponseDto(organization.getId(), organization.getName(), organization.isActive());
     }
 
+    @Override
+    public String toString() {
+        return "name: " + name + "," + '\'' +
+                "isActive: " + isActive + '\'' +
+                '}';
+    }
 }
