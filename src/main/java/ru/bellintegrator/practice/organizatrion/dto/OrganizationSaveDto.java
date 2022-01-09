@@ -17,6 +17,20 @@ public class OrganizationSaveDto {
     public String phone;
     public boolean isActive;
 
+    public OrganizationSaveDto(String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
+        this.name = name;
+        this.fullName = fullName;
+        this.inn = inn;
+        this.kpp = kpp;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
+
+    public OrganizationSaveDto(String name) {
+        this.name = name;
+    }
+
     public static Organization getOrganizationFromSaveDto(OrganizationSaveDto orgSaveDto) {
         return new Organization(orgSaveDto.name,
                 orgSaveDto.fullName, orgSaveDto.inn,
