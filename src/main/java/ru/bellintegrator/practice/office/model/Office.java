@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import java.util.List;
+
 /**
  * Офис
  */
@@ -70,13 +71,18 @@ public class Office {
     private boolean isActive;
 
     /**
-     * Конструктор для hibernate
+     * Конструктор
      */
     public Office() {
     }
 
     /**
      * Конструктор
+     * @param name
+     * @param organization
+     * @param address
+     * @param phone
+     * @param isActive
      */
     public Office(String name, Organization organization, String address, String phone, boolean isActive) {
         this.name = name;

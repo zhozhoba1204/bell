@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
 import java.util.List;
 
@@ -79,11 +78,21 @@ public class Organization {
     private List<Office> offices;
 
     /**
-     * Конструктор для hibernate
+     * Конструктор
      */
     public Organization() {
     }
 
+    /**
+     * Конструктор
+     * @param name
+     * @param fullName
+     * @param inn
+     * @param kpp
+     * @param address
+     * @param phone
+     * @param isActive
+     */
     public Organization(String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.name = name;
         this.fullName = fullName;
@@ -93,8 +102,17 @@ public class Organization {
         this.phone = phone;
         this.isActive = isActive;
     }
+
     /**
      * Конструктор
+     * @param id
+     * @param name
+     * @param fullName
+     * @param inn
+     * @param kpp
+     * @param address
+     * @param phone
+     * @param isActive
      */
     public Organization(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.name = name;
@@ -109,6 +127,7 @@ public class Organization {
     public Integer getId() {
         return id;
     }
+
 
     public Integer getVersion() {
         return version;

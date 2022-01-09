@@ -1,25 +1,24 @@
 package ru.bellintegrator.practice.user.dao;
 
-
 import ru.bellintegrator.practice.user.dto.UserRequestDto;
 import ru.bellintegrator.practice.user.dto.UserUpdateDto;
 import ru.bellintegrator.practice.user.model.User;
 import java.util.List;
 
 /**
- * DAO для работы с Office
+ * DAO для работы с User
  */
 public interface UserDao {
 
     /**
-     * Получить все объекты Usr по фильтру
+     * Получить всех юзеров по фильтру
      *
      * @return
      */
     List<User> filter(UserRequestDto userRequestDto);
 
     /**
-     * Получить Usr по идентификатору
+     * Получить юзера по id
      *
      * @param id
      * @return
@@ -27,14 +26,14 @@ public interface UserDao {
     User loadById(Integer id);
 
     /**
-     * Редактировать Usr
+     * Редактировать юзера
      *
      * @param userUpdateDto
      */
     void update(UserUpdateDto userUpdateDto);
 
     /**
-     * Сохранить Usr
+     * Сохранить юзера
      *
      * @param user
      */

@@ -1,9 +1,6 @@
 package ru.bellintegrator.practice.organizatrion.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,55 +10,70 @@ import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationResponseDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationSaveDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
 import ru.bellintegrator.practice.organizatrion.service.OrganizationService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Контроллер для работы с Organization
+ */
 @RestController()
 public class OrganizationController {
 
-    private OrganizationService organizationService;
+    private final OrganizationService organizationService;
 
     @Autowired
     public OrganizationController(OrganizationService organizationService) {
         this.organizationService = organizationService;
     }
 
+    /**
+     * Получить список организаций по заданному фильтру
+     * @param organizationRequestDto
+     * @return
+     */
     @PostMapping("api/organization/list")
-    public ResponseEntity<Map<String, List<OrganizationResponseDto>>> filter(
+    public List<OrganizationResponseDto> filter(
             @RequestBody OrganizationRequestDto organizationRequestDto){
         List<OrganizationResponseDto> result = organizationService.filter(organizationRequestDto);
-       Map<String, List<OrganizationResponseDto>> map = new HashMap<>();
-       map.put("data", result);
-        return new ResponseEntity<Map<String, List<OrganizationResponseDto>>>(map, HttpStatus.OK);
+        return result;
     }
 
+    /**
+     * Получить организацию по id
+     * @param id
+     * @return
+     */
     @GetMapping("api/organization/{id}")
-    public ResponseEntity<Map<String, OrganizationUpdateDto>> loadById(@PathVariable Integer id){
+    public OrganizationUpdateDto loadById(@PathVariable Integer id){
         OrganizationUpdateDto result = organizationService.loadById(id);
-        Map<String, OrganizationUpdateDto> map = new HashMap<>();
-        map.put("data", result);
-        return new ResponseEntity<Map<String, OrganizationUpdateDto>>(map, HttpStatus.OK);
-    }
-    @PostMapping("api/organization/update")
-    public ResponseEntity<Map> update(@RequestBody OrganizationUpdateDto organizationUpdateDto){
-        organizationService.update(organizationUpdateDto);
-        Map<String, String> map = new HashMap<>();
-        map.put("result","succses");
-        Map<String, Map> result = new HashMap<>();
-        result.put("data", map);
-        return new ResponseEntity<Map>(result, HttpStatus.OK);
+        return result;
     }
 
+    /**
+     * Изменить организацию
+     * @param organizationUpdateDto
+     * @return
+     */
+    @PostMapping("api/organization/update")
+    public Map<String, String> update(@RequestBody OrganizationUpdateDto organizationUpdateDto){
+        organizationService.update(organizationUpdateDto);
+        Map<String, String> result = new HashMap<>();
+        result.put("result","success");
+        return result;
+    }
+
+    /**
+     * Сохранить новую организацию
+     * @param organizationSaveDto
+     * @return
+     */
     @PostMapping("api/organization/save")
-    public ResponseEntity<Map> save(@RequestBody OrganizationSaveDto organizationSaveDto){
+    public Map<String, String> save(@RequestBody OrganizationSaveDto organizationSaveDto){
         organizationService.save(organizationSaveDto);
-        Map<String, String> map = new HashMap<>();
-        map.put("result","succses");
-        Map<String, Map> result = new HashMap<>();
-        result.put("data", map);
-        return new ResponseEntity<Map>(result, HttpStatus.OK);
+        Map<String, String> result = new HashMap<>();
+        result.put("result","success");
+        return result;
     }
 }

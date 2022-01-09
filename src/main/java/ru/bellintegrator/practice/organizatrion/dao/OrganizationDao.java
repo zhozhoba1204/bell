@@ -4,6 +4,7 @@ import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
 import ru.bellintegrator.practice.organizatrion.model.Organization;
 import java.util.List;
+
 /**
  * DAO для работы с Organization
  */
@@ -11,7 +12,7 @@ public interface OrganizationDao {
     /**
      * Получить все объекты Organization по фильтру
      *
-     * @return
+     * @return список организаций
      */
     List<Organization> filter(OrganizationRequestDto organizationRequestDto);
     /**
@@ -24,7 +25,7 @@ public interface OrganizationDao {
     /**
      * Редактировать Organization
      *
-     * @param organizationDto
+     * @param
      */
     void update(OrganizationUpdateDto organization);
     /**

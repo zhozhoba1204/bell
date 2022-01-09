@@ -1,29 +1,39 @@
 package ru.bellintegrator.practice.user.dao;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import org.springframework.stereotype.Repository;
+import ru.bellintegrator.practice.citizenship.dao.CitizenshipDao;
+import ru.bellintegrator.practice.documents.dao.DocumentDao;
+import ru.bellintegrator.practice.documents.model.DocumentInfo;
+import ru.bellintegrator.practice.office.dao.OfficeDao;
+import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.user.dto.UserRequestDto;
 import ru.bellintegrator.practice.user.dto.UserUpdateDto;
 import ru.bellintegrator.practice.user.model.User;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * {@inheritDoc}
  */
+@Repository
 public class UserDaoImpl implements UserDao{
+    private final OfficeDao officeDao;
     private final EntityManager em;
+    private final DocumentDao documentDao;
+    private final CitizenshipDao citizenshipDao;
+
 
     @Autowired
-    public UserDaoImpl(EntityManager em){
+    public UserDaoImpl(OfficeDao officeDao, EntityManager em, DocumentDao documentDao,CitizenshipDao citizenshipDao) {
+        this.officeDao = officeDao;
         this.em = em;
+        this.documentDao = documentDao;
+        this.citizenshipDao = citizenshipDao;
     }
-
     /**
      * {@inheritDoc}
      */
@@ -34,47 +44,41 @@ public class UserDaoImpl implements UserDao{
         String lastName = userRequestDto.lastName;
         String middleName = userRequestDto.middleName;
         String position = userRequestDto.position;
-        String docCode = userRequestDto.docCode;
+        Integer docCode = userRequestDto.docCode;
         String citizenshipCode = userRequestDto.citizenshipCode;
 
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
-        Root<Organization> root = criteriaQuery.from(User.class);
-
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        predicates.add(
-                criteriaBuilder.equal(root.get("officeId"), officeId));
-        if (firstName != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("firstName"), firstName));
+        Office office = officeDao.loadById(officeId);
+        List<User> list = office.getUsers();
+        if (firstName!=null){
+            list = list.stream().filter(user->user.getFirstName().equals(firstName)).collect(Collectors.toList());
         }
-        if (lastName != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("lastName"), lastName));
+        if (lastName!=null){
+            list = list.stream().filter(user->user.getLastName().equals(lastName)).collect(Collectors.toList());
         }
-        if (middleName != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("middleName"), middleName));
+        if (middleName!=null){
+            list = list.stream().filter(user->user.getMiddleName().equals(middleName)).collect(Collectors.toList());
         }
-        if (position != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("position"), position));
+        if (position!=null){
+            list = list.stream().filter(user->user.getPosition().equals(position)).collect(Collectors.toList());
         }
-        if (docCode != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("docCode"), docCode));
+        if (docCode!=null){
+            List<DocumentInfo> documentInfo = documentDao.loadByDocumentType(docCode);
+//            list = list.stream().filter(user->user.getDocumentInfo().getDocName().equals(documentInfo)).collect(Collectors.toList());
+           List<User> users = new ArrayList<>();
+            for (int i = 0; i<list.size();i++){
+                User u = list.get(i);
+                for (int j = 0; j<documentInfo.size(); j++){
+                    if (u.getId().equals(documentInfo.get(j).getUser().getId())){
+                        users.add(u);
+                    }
+                }
+            }
+            list = users;
         }
-        if (citizenshipCode != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("citizenshipCode"), citizenshipCode));
+        if (citizenshipCode!=null){
+            list = list.stream().filter(user->user.getCitizenship().equals(citizenshipDao.loadByCitizenshipCode(citizenshipCode))).collect(Collectors.toList());
         }
-
-
-        Predicate [] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-        criteriaQuery.select(root).where(predicatesarr);
-
-        List<User> result = em.createQuery(criteriaQuery).getResultList();
-        return result;
+        return list;
     }
 
     /**
@@ -90,64 +94,44 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public void update(UserUpdateDto userUpdateDto) {
-        Integer id = userUpdateDto.id;
-        Integer officeId = userUpdateDto.officeId;
-        String firstName = userUpdateDto.firstName;
-        String secondName = userUpdateDto.secondName;//lastName??
-        String middleName = userUpdateDto.middleName;
-        String position = userUpdateDto.position;
-        String phone = userUpdateDto.phone;
-        String docName = userUpdateDto.docName;
-        String docNumber = userUpdateDto.docNumber;
-        String docDate = userUpdateDto.docDate;
-        String citizenshipCode = userUpdateDto.citizenshipCode;
-        boolean isIdentifier = userUpdateDto.isIdentifier;
 
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
-        Root<Organization> root = criteriaQuery.from(User.class);
+        User user = em.find(User.class, userUpdateDto.id);
+        if (userUpdateDto.officeId!=null){
+        Office office = em.find(Office.class,userUpdateDto.officeId);
+        user.setOffice(office);
+        }
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        predicates.add(
-                criteriaBuilder.equal(root.get("id"), id));
-        if (officeId != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("officeId"), officeId));
-        }
-        predicates.add(criteriaBuilder.equal(root.get("firstName"), firstName));
-        if (secondName != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("secondName"), secondName));
-        }
-        if (middleName != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("middleName"), middleName));
-        }
-        predicates.add(criteriaBuilder.equal(root.get("position"), position));
-        if (docName != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("docName"), docName));
-            if (docNumber != null) {
-                predicates.add(
-                        criteriaBuilder.equal(root.get("docNumber"), docNumber));
-            }
-            if (docDate != null) {
-                predicates.add(
-                        criteriaBuilder.equal(root.get("docDate"), docDate));
-            }
-            if (citizenshipCode != null) {
-                predicates.add(
-                        criteriaBuilder.equal(root.get("citizenshipCode"), citizenshipCode));
-            }
-            if ((isIdentifier)) {
-                predicates.add(criteriaBuilder.equal(root.get("isIdentifier"), isIdentifier));
-            }
+        user.setFirstName(userUpdateDto.firstName);
 
-            Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-            criteriaQuery.select(root).where(predicatesarr);
-
-            int result = em.createQuery(criteriaQuery).executeUpdate();
+        if (userUpdateDto.secondName!=null) {
+            user.setLastName(userUpdateDto.secondName);
         }
+        if (userUpdateDto.middleName!=null) {
+            user.setMiddleName(userUpdateDto.middleName);
+        }
+
+        user.setPosition(userUpdateDto.position);
+
+        if (userUpdateDto.phone!=null) {
+            user.setPhone(userUpdateDto.phone);
+        }
+        if (userUpdateDto.docNumber!=null){
+            documentDao.updateDocNumber(userUpdateDto.id, userUpdateDto.docNumber);
+        }
+        if (userUpdateDto.docDate!=null){
+            documentDao.updateDocDate(userUpdateDto.id, userUpdateDto.docDate);
+        }
+        if (userUpdateDto.docName!=null){
+            documentDao.updateDocName(userUpdateDto.id, userUpdateDto.docName);
+        }
+        if (userUpdateDto.citizenshipCode!=null) {
+            user.setCitizenship(citizenshipDao.loadByCitizenshipCode(userUpdateDto.citizenshipCode));
+        }
+        if (userUpdateDto.isIdentified) {
+            user.setIdentified(userUpdateDto.isIdentified);
+        }
+        Session session = em.unwrap(Session.class);
+        session.update(user);
     }
 
     /**

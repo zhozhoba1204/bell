@@ -3,18 +3,12 @@ package ru.bellintegrator.practice.office.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.office.dto.OfficeRequestDto;
 import ru.bellintegrator.practice.office.dto.OfficeUpdateDto;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.organizatrion.dao.OrganizationDao;
 import ru.bellintegrator.practice.organizatrion.model.Organization;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 /**
@@ -65,7 +59,6 @@ public class OfficeDaoImpl implements OfficeDao {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void update(OfficeUpdateDto officeUpdateDto) {
         Office of = em.find(Office.class, officeUpdateDto.id);
         of.setName(officeUpdateDto.name);
@@ -84,7 +77,6 @@ public class OfficeDaoImpl implements OfficeDao {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void save(Office office) {
         em.persist(office);
     }

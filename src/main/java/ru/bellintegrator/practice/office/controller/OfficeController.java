@@ -1,8 +1,6 @@
 package ru.bellintegrator.practice.office.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,50 +15,65 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Контроллер для работы с Office
+ */
 @RestController
 public class OfficeController {
 
-    private OfficeService officeService;
+    private final OfficeService officeService;
 
     @Autowired
     public OfficeController(OfficeService officeService) {
         this.officeService = officeService;
     }
 
+    /**
+     * Вернуть список офисов по заданному фильтру
+     * @param officeRequestDto
+     * @return
+     */
     @PostMapping("api/office/list")
-    public ResponseEntity<Map<String, List<OfficeResponseDto>>> filter(
+    public List<OfficeResponseDto> filter(
             @RequestBody OfficeRequestDto officeRequestDto){
         List<OfficeResponseDto> result = officeService.filter(officeRequestDto);
-        Map<String, List<OfficeResponseDto>> map = new HashMap<>();
-        map.put("data", result);
-        return new ResponseEntity<Map<String, List<OfficeResponseDto>>>(map, HttpStatus.OK);
+        return result;
     }
 
+    /**
+     * Получить офис по id
+     * @param id
+     * @return
+     */
     @GetMapping("api/office/{id}")
-    public ResponseEntity<Map<String, OfficeUpdateDto>> loadById(@PathVariable Integer id){
+    public OfficeUpdateDto loadById(@PathVariable Integer id){
         OfficeUpdateDto result = officeService.loadById(id);
-        Map<String, OfficeUpdateDto> map = new HashMap<>();
-        map.put("data", result);
-        return new ResponseEntity<Map<String, OfficeUpdateDto>>(map, HttpStatus.OK);
+       return result;
     }
 
+    /**
+     * Изменить офис
+     * @param officeUpdateDto
+     * @return
+     */
     @PostMapping("api/office/update")
-    public ResponseEntity<Map> update(@RequestBody OfficeUpdateDto officeUpdateDto){
+    public Map<String,String> update(@RequestBody OfficeUpdateDto officeUpdateDto){
         officeService.update(officeUpdateDto);
-        Map<String, String> map = new HashMap<>();
-        map.put("result","succses");
-        Map<String, Map> result = new HashMap<>();
-        result.put("data", map);
-        return new ResponseEntity<Map>(result, HttpStatus.OK);
+        Map<String, String> result = new HashMap<>();
+        result.put("result","success");
+       return result;
     }
 
+    /**
+     * Сохранить новый офис
+     * @param officeSaveDto
+     * @return
+     */
     @PostMapping("api/office/save")
-    public ResponseEntity<Map> save(@RequestBody OfficeSaveDto officeSaveDto){
+    public Map<String,String> save(@RequestBody OfficeSaveDto officeSaveDto){
         officeService.save(officeSaveDto);
-        Map<String, String> map = new HashMap<>();
-        map.put("result","succses");
-        Map<String, Map> result = new HashMap<>();
-        result.put("data", map);
-        return new ResponseEntity<Map>(result, HttpStatus.OK);
+        Map<String, String> result = new HashMap<>();
+        result.put("result","success");
+        return result;
     }
 }

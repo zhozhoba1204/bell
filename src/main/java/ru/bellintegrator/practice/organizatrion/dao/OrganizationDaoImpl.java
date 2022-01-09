@@ -1,21 +1,17 @@
 package ru.bellintegrator.practice.organizatrion.dao;
 
-import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
 import ru.bellintegrator.practice.organizatrion.model.Organization;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 /**
  * {@inheritDoc}
@@ -73,7 +69,6 @@ public class OrganizationDaoImpl implements OrganizationDao{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void update(OrganizationUpdateDto organization) {
         Organization org = em.find(Organization.class, organization.id);
         org.setName(organization.name);
@@ -94,7 +89,6 @@ public class OrganizationDaoImpl implements OrganizationDao{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void save(Organization organization) {
         em.persist(organization);
     }

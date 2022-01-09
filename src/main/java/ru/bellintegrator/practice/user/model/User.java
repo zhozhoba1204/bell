@@ -1,7 +1,7 @@
 package ru.bellintegrator.practice.user.model;
 
-import ru.bellintegrator.practice.citizenship.Citizenship;
-import ru.bellintegrator.practice.documents.DocumentInfo;
+import ru.bellintegrator.practice.citizenship.model.Citizenship;
+import ru.bellintegrator.practice.documents.model.DocumentInfo;
 import ru.bellintegrator.practice.office.model.Office;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
-import java.util.List;
+
 /**
  * Пользователь
  */
@@ -95,22 +95,35 @@ public class User {
     private boolean isIdentified;
 
     /**
-     * Конструктор для hibernate
+     * Конструктор
      */
     public User() {
     }
 
     /**
      * Конструктор
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param position
+     * @param phone
+     * @param documentInfo
+     * @param office
+     * @param citizenship
+     * @param isIdentified
      */
-    public User(String firstName, String middleName, String lastName, String position, String phone, Office office, Citizenship citizenship) {
+    public User(String firstName, String middleName, String lastName, String position,
+                String phone, DocumentInfo documentInfo, Office office, Citizenship citizenship,
+                boolean isIdentified) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.position = position;
         this.phone = phone;
+        this.documentInfo = documentInfo;
         this.office = office;
         this.citizenship = citizenship;
+        this.isIdentified = isIdentified;
     }
 
     public Integer getId() {
