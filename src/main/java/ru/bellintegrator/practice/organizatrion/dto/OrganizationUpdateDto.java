@@ -41,4 +41,71 @@ public class OrganizationUpdateDto {
                 org.getKpp(), org.getAddress(),
                 org.getPhone(), org.isActive());
     }
+
+    public static Organization getOrganizationFromUpdateDto(OrganizationUpdateDto org) {
+        return new Organization(org.getId(), org.getName(),
+                org.getFullName(), org.getInn(),
+                org.getKpp(), org.getAddress(),
+                org.getPhone(), org.isActive());
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getInn() {
+        return inn;
+    }
+
+    public void setInn(String inn) {
+        this.inn = inn;
+    }
+
+    public String getKpp() {
+        return kpp;
+    }
+
+    public void setKpp(String kpp) {
+        this.kpp = kpp;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
