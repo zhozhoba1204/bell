@@ -22,15 +22,9 @@ public class UserResponseDto {
                     user.getMiddleName(), user.getPosition());
       }
 
-      @Override
-      public String toString() {
-            return "UserResponseDto{" +
-                    "id: " + id +
-                    ", firstName: '" + firstName +
-                    ", secondName: '" + secondName +
-                    ", middleName: '" + middleName +
-                    ", position: '" + position +
-                    '}';
+      public static UserResponseDto getResponseDtoFromUser(User user) {
+            return new UserResponseDto(user.getId(), user.getFirstName(), user.getLastName(), user.getMiddleName(),
+                    user.getPosition());
       }
 }
 
