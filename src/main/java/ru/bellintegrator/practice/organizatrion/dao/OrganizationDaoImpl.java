@@ -39,7 +39,7 @@ public class OrganizationDaoImpl implements OrganizationDao{
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root<Organization> root = criteriaQuery.from(Organization.class);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
+        List<Predicate> predicates = new ArrayList<>();
             predicates.add(
                     criteriaBuilder.equal(root.get("name"), name));
         if (inn != null) {
@@ -79,8 +79,8 @@ public class OrganizationDaoImpl implements OrganizationDao{
         if (organization.phone!=null) {
             org.setPhone(organization.phone);
         }
-        if (organization.isActive && organization.isActive!=org.isActive()) {
-            org.setActive(organization.isActive);
+        if (organization.isActive && organization.isActive!=org.asActive()) {
+            org.setIsActive(organization.isActive);
         }
         Session session = em.unwrap(Session.class);
         session.update(org);
