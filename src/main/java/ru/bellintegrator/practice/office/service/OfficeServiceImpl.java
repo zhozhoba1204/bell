@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  * {@inheritDoc}
  */
 @Service
+@Transactional
 public class OfficeServiceImpl implements OfficeService{
 
     private final OfficeDao officeDao;
@@ -31,18 +32,16 @@ public class OfficeServiceImpl implements OfficeService{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public List<OfficeResponseDto> filter(OfficeRequestDto officeRequestDto) {
         List<Office> daoList = officeDao.filter(officeRequestDto);
         return daoList.stream()
-                .map(OfficeResponseDto ::getResponceDtoFromOffice)
+                .map(OfficeResponseDto ::getResponseDtoFromOffice)
                 .collect(Collectors.toList());
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public OfficeUpdateDto loadById(Integer id) {
         Office office = officeDao.loadById(id);
         OfficeUpdateDto result = OfficeUpdateDto.getOfficeFromUpdateDto(office);
@@ -52,14 +51,13 @@ public class OfficeServiceImpl implements OfficeService{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void update(OfficeUpdateDto officeUpdateDto) {
         officeDao.update(officeUpdateDto);
     }
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    @Override
     public void save(OfficeSaveDto officeSaveDto){
         Organization organization = organizationDao.loadById(officeSaveDto.orgId);
         Office office = OfficeSaveDto.getOfficeFromSaveDto(organization, officeSaveDto);

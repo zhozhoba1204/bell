@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  * {@inheritDoc}
  */
 @Service
+@Transactional
 public class OrganizationServiceImpl implements OrganizationService {
 
     private final OrganizationDao organizationDao;
@@ -27,7 +28,6 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public List<OrganizationResponseDto> filter(OrganizationRequestDto organizationRequestDto) {
         List<Organization> daoList = organizationDao.filter(organizationRequestDto);
         return daoList.stream()
@@ -38,7 +38,6 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public OrganizationUpdateDto loadById(Integer id) {
         Organization organization = organizationDao.loadById(id);
         OrganizationUpdateDto result = OrganizationUpdateDto.getUpdateDtoFromOrganization(organization);
@@ -48,7 +47,6 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void update(OrganizationUpdateDto organizationUpdateDto) {
         organizationDao.update(organizationUpdateDto);
     }
@@ -56,7 +54,6 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void save(OrganizationSaveDto organizationSaveDto) {
         Organization organization = OrganizationSaveDto.getOrganizationFromSaveDto(organizationSaveDto);
         organizationDao.save(organization);

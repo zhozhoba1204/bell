@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  * {@inheritDoc}
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
@@ -36,7 +37,6 @@ public class UserServiceImpl implements UserService{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public List<UserResponseDto> filter(UserRequestDto userRequestDto) {
         List<User> daoList = userDao.filter(userRequestDto);
         return daoList.stream()
@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public UserUpdateDto loadById(Integer id) {
         User user = userDao.loadById(id);
         UserUpdateDto result = UserUpdateDto.getUserFromUpdateDto(user);
@@ -57,7 +56,6 @@ public class UserServiceImpl implements UserService{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void update(UserUpdateDto userUpdateDto) {
         userDao.update(userUpdateDto);
     }
@@ -65,7 +63,6 @@ public class UserServiceImpl implements UserService{
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void save(UserSaveDto userSaveDto) {
         Office office = officeDao.loadById(userSaveDto.officeId);
         Citizenship citizenship = citizenshipDao.loadByCitizenshipCode(userSaveDto.citizenshipCode);
