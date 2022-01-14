@@ -128,7 +128,6 @@ public class Organization {
         return id;
     }
 
-
     public Integer getVersion() {
         return version;
     }
@@ -184,12 +183,12 @@ public class Organization {
         return offices;
     }
 
-    public boolean isActive() {
+    public boolean asActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(boolean isActive) {
+        isActive = isActive;
     }
 
     public void setOffices(List<Office> offices) {
