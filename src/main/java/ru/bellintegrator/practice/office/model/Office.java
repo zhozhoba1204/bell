@@ -140,11 +140,11 @@ public class Office {
         this.users = users;
     }
 
-    public boolean isActive() {
+    public boolean asActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 }
