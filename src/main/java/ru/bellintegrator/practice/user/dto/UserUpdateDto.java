@@ -39,6 +39,6 @@ public class UserUpdateDto {
         return new UserUpdateDto(user.getId(),user.getOffice().getId(), user.getFirstName(),user.getLastName(),
                 user.getMiddleName(),user.getPosition(),user.getPhone(), user.getDocumentInfo().getDocName(),
                 user.getDocumentInfo().getDocNumber(),user.getDocumentInfo().getDocDate(),user.getCitizenship().getCitizenshipCode(),
-                user.isIdentified());
+                user.asIdentified());
     }
 }

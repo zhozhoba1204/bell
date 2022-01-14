@@ -63,7 +63,6 @@ public class UserDaoImpl implements UserDao{
         }
         if (docCode!=null){
             List<DocumentInfo> documentInfo = documentDao.loadByDocumentType(docCode);
-//            list = list.stream().filter(user->user.getDocumentInfo().getDocName().equals(documentInfo)).collect(Collectors.toList());
            List<User> users = new ArrayList<>();
             for (int i = 0; i<list.size();i++){
                 User u = list.get(i);
@@ -128,7 +127,7 @@ public class UserDaoImpl implements UserDao{
             user.setCitizenship(citizenshipDao.loadByCitizenshipCode(userUpdateDto.citizenshipCode));
         }
         if (userUpdateDto.isIdentified) {
-            user.setIdentified(userUpdateDto.isIdentified);
+            user.setIsIdentified(userUpdateDto.isIdentified);
         }
         Session session = em.unwrap(Session.class);
         session.update(user);

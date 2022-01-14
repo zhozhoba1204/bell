@@ -197,11 +197,11 @@ public class User {
         this.citizenship = citizenship;
     }
 
-    public boolean isIdentified() {
+    public boolean asIdentified() {
         return isIdentified;
     }
 
-    public void setIdentified(boolean identified) {
+    public void setIsIdentified(boolean identified) {
         isIdentified = identified;
     }
 }
