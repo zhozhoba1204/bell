@@ -31,19 +31,18 @@ public class OfficeDaoImpl implements OfficeDao {
      */
     @Override
     public List<Office> filter(OfficeRequestDto officeRequestDto) {
-        Integer orgId = officeRequestDto.orgId;
-        String name = officeRequestDto.name;
-        String phone = officeRequestDto.phone;
-        boolean isActive = officeRequestDto.isActive;
+        Integer orgId = officeRequestDto.getOrgId();
+        String name = officeRequestDto.getName();
+        String phone = officeRequestDto.getPhone();
+        boolean isActive = officeRequestDto.asActive();
 
         Organization organization = organizationDao.loadById(orgId);
         List<Office> list = organization.getOffices();
         if (name!=null){
-            list = (List<Office>) list.stream().filter(office->office.getName().equals(name)).collect(Collectors.toList());
+            list = list.stream().filter(office->office.getName().equals(name)).collect(Collectors.toList());
         }
-        if (isActive){
-           list = list.stream().filter(office -> isActive == office.isActive()).collect(Collectors.toList());
-        }
+           list = list.stream().filter(office -> office.asActive()==isActive).collect(Collectors.toList());
+
         return list;
     }
 
@@ -66,8 +65,8 @@ public class OfficeDaoImpl implements OfficeDao {
         if (officeUpdateDto.phone!=null) {
             of.setPhone(officeUpdateDto.phone);
         }
-        if (officeUpdateDto.isActive && officeUpdateDto.isActive!=of.isActive()) {
-            of.setActive(officeUpdateDto.isActive);
+        if (officeUpdateDto.isActive && officeUpdateDto.isActive!=of.asActive()) {
+            of.setIsActive(officeUpdateDto.isActive);
         }
         Session session = em.unwrap(Session.class);
         session.update(of);
