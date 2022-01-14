@@ -26,6 +26,6 @@ public class OfficeUpdateDto {
 
     public static OfficeUpdateDto getOfficeFromUpdateDto(Office office){
         return new OfficeUpdateDto(office.getId(), office.getName(), office.getAddress(),
-                office.getPhone(), office.isActive());
+                office.getPhone(), office.asActive());
     }
 }
