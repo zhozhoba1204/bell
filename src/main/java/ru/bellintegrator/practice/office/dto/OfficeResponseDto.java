@@ -1,8 +1,6 @@
 package ru.bellintegrator.practice.office.dto;
 
 import ru.bellintegrator.practice.office.model.Office;
-import ru.bellintegrator.practice.organizatrion.dto.OrganizationResponseDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
 
 public class OfficeResponseDto {
 
@@ -16,7 +14,29 @@ public class OfficeResponseDto {
         this.isActive = isActive;
     }
 
-    public static OfficeResponseDto getResponceDtoFromOffice(Office office){
-        return new OfficeResponseDto(office.getId(), office.getName(), office.isActive());
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean asActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        isActive = isActive;
+    }
+
+    public static OfficeResponseDto getResponseDtoFromOffice(Office office){
+        return new OfficeResponseDto(office.getId(), office.getName(), office.asActive());
     }
 }
