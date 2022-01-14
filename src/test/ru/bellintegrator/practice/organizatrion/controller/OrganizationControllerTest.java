@@ -49,10 +49,10 @@ class OrganizationControllerTest {
                 ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id", is(list.get(0).getId())))
                 .andExpect(jsonPath("$.data[0].name", is(list.get(0).getName())))
-                .andExpect(jsonPath("$.data[0].isActive", is(list.get(0).isActive())))
+                .andExpect(jsonPath("$.data[0].isActive", is(list.get(0).asActive())))
                 .andExpect(jsonPath("$.data[1].id", is(list.get(1).getId())))
                 .andExpect(jsonPath("$.data[1].name", is(list.get(1).getName())))
-                .andExpect(jsonPath("$.data[1].isActive", is(list.get(1).isActive())));
+                .andExpect(jsonPath("$.data[1].isActive", is(list.get(1).asActive())));
     }
 
     @Test
@@ -79,7 +79,7 @@ class OrganizationControllerTest {
                 .andExpect(jsonPath("$.data.kpp", is(organization.getKpp())))
                 .andExpect(jsonPath("$.data.address", is(organization.getAddress())))
                 .andExpect(jsonPath("$.data.phone", is(organization.getPhone())))
-                .andExpect(jsonPath("$.data.isActive", is(organization.isActive())));
+                .andExpect(jsonPath("$.data.isActive", is(organization.asActive())));
     }
 
     @Test
