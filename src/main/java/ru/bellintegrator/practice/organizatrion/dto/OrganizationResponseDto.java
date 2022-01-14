@@ -26,22 +26,16 @@ public class OrganizationResponseDto {
         this.name = name;
     }
 
-    public boolean isActive() {
+    public boolean asActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(boolean isActive) {
+        isActive = isActive;
     }
 
     public static OrganizationResponseDto getDtoFromOrganization(Organization organization){
-return new OrganizationResponseDto(organization.getId(), organization.getName(), organization.isActive());
+return new OrganizationResponseDto(organization.getId(), organization.getName(), organization.asActive());
     }
 
-    @Override
-    public String toString() {
-        return "name: " + name + "," + '\'' +
-                "isActive: " + isActive + '\'' +
-                '}';
-    }
 }

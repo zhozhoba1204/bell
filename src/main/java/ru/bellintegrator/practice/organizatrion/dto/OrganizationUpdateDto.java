@@ -39,7 +39,7 @@ public class OrganizationUpdateDto {
         return new OrganizationUpdateDto(org.getId(), org.getName(),
                 org.getFullName(), org.getInn(),
                 org.getKpp(), org.getAddress(),
-                org.getPhone(), org.isActive());
+                org.getPhone(), org.asActive());
     }
 
     public static Organization getOrganizationFromUpdateDto(OrganizationUpdateDto org) {
