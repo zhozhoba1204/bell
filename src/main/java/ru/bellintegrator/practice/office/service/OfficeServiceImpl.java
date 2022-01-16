@@ -44,7 +44,7 @@ public class OfficeServiceImpl implements OfficeService{
     @Override
     public OfficeUpdateDto loadById(Integer id) {
         Office office = officeDao.loadById(id);
-        OfficeUpdateDto result = OfficeUpdateDto.getOfficeFromUpdateDto(office);
+        OfficeUpdateDto result = OfficeUpdateDto.getUpdateDtoFromOffice(office);
         return result;
     }
     /**
