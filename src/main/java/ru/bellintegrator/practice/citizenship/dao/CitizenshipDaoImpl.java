@@ -26,7 +26,9 @@ public class CitizenshipDaoImpl implements CitizenshipDao {
     @Override
     public Citizenship loadByCitizenshipCode(String citizenshipCode) {
         Query query = em.createQuery("select c from Citizenship as c where citizenship_code =?1", Citizenship.class);
-                query.setParameter(1,citizenshipCode);
+                query.setParameter(1,citizenshipCode)
+                        .setFirstResult(0)
+                        .setMaxResults(1);
         Citizenship result = (Citizenship) query.getSingleResult();
         return result;
     }
