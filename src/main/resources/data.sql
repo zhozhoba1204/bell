@@ -7,7 +7,8 @@ VALUES (2, 0, 'Fest', 1, 'Ozernaya', '84950000002', true),
        (3, 0, 'Rio', 1, 'Ozerka', '84950000002', false);
 
 INSERT INTO Citizenship (id, citizenship_code, version, citizenship_name)
-VALUES (1, '633', 0, 'РФ');
+VALUES (1, '633', 0, 'РФ'),
+       (2, '222',0,'KZ');
 
 INSERT INTO Usr (id, version, first_name, middle_name, last_name, position, phone, office_id, citizenship_id,
                  is_identified)
