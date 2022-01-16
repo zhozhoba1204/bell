@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserUpdateDto loadById(Integer id) {
         User user = userDao.loadById(id);
-        UserUpdateDto result = UserUpdateDto.getUserFromUpdateDto(user);
+        UserUpdateDto result = UserUpdateDto.getUpdateDtoFromUser(user);
         return result;
     }
     /**
