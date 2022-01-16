@@ -42,13 +42,6 @@ public class OrganizationUpdateDto {
                 org.getPhone(), org.asActive());
     }
 
-    public static Organization getOrganizationFromUpdateDto(OrganizationUpdateDto org) {
-        return new Organization(org.getId(), org.getName(),
-                org.getFullName(), org.getInn(),
-                org.getKpp(), org.getAddress(),
-                org.getPhone(), org.isActive());
-    }
-
     public Integer getId() {
         return id;
     }
@@ -101,11 +94,11 @@ public class OrganizationUpdateDto {
         this.phone = phone;
     }
 
-    public boolean isActive() {
+    public boolean asActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 }
