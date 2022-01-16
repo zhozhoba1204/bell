@@ -20,6 +20,11 @@ public class UserUpdateDto {
     public String citizenshipCode;
     public boolean isIdentified;
 
+    public UserUpdateDto(Integer id, String firstName) {
+        this.id = id;
+        this.firstName = firstName;
+    }
+
     public UserUpdateDto(Integer id, Integer officeId, String firstName, String secondName, String middleName, String position, String phone, String docName, String docNumber, String docDate, String citizenshipCode, boolean isIdentified) {
         this.id = id;
         this.officeId = officeId;
@@ -35,10 +40,102 @@ public class UserUpdateDto {
         this.isIdentified = isIdentified;
     }
 
-    public static UserUpdateDto getUserFromUpdateDto(User user) {
+    public static UserUpdateDto getUpdateDtoFromUser(User user) {
         return new UserUpdateDto(user.getId(),user.getOffice().getId(), user.getFirstName(),user.getLastName(),
                 user.getMiddleName(),user.getPosition(),user.getPhone(), user.getDocumentInfo().getDocName(),
                 user.getDocumentInfo().getDocNumber(),user.getDocumentInfo().getDocDate(),user.getCitizenship().getCitizenshipCode(),
                 user.asIdentified());
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(Integer officeId) {
+        this.officeId = officeId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
+    }
+
+    public String getDocNumber() {
+        return docNumber;
+    }
+
+    public void setDocNumber(String docNumber) {
+        this.docNumber = docNumber;
+    }
+
+    public String getDocDate() {
+        return docDate;
+    }
+
+    public void setDocDate(String docDate) {
+        this.docDate = docDate;
+    }
+
+    public String getCitizenshipCode() {
+        return citizenshipCode;
+    }
+
+    public void setCitizenshipCode(String citizenshipCode) {
+        this.citizenshipCode = citizenshipCode;
+    }
+
+    public boolean asIdentified() {
+        return isIdentified;
+    }
+
+    public void setIsIdentified(boolean identified) {
+        isIdentified = identified;
     }
 }
