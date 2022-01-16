@@ -79,6 +79,20 @@ public class Office {
     /**
      * Конструктор
      * @param name
+     * @param address
+     * @param phone
+     * @param isActive
+     */
+    public Office(String name, String address, String phone, boolean isActive) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
+
+    /**
+     * Конструктор
+     * @param name
      * @param organization
      * @param address
      * @param phone
