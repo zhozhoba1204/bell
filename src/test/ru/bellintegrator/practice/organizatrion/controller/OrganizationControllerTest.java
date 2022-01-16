@@ -16,9 +16,7 @@ import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationResponseDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationSaveDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
 import ru.bellintegrator.practice.organizatrion.service.OrganizationService;
-import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -58,17 +56,17 @@ class OrganizationControllerTest {
     @Test
     public void filterShouldReturnErrorWhenRequestIsIncorrect() throws Exception {
         OrganizationRequestDto organizationRequestDto = new OrganizationRequestDto("qasdad", "111", true);
+        List<OrganizationResponseDto> list = organizationService.filter(organizationRequestDto);
         mockMvc.perform(post("/api/organization/list")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(organizationRequestDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data", is(new ArrayList())));
+                .andExpect(jsonPath("$.data", is(list)));
     }
 
     @Test
     public void loadByIdShouldReturnSuccess() throws Exception {
-        OrganizationUpdateDto organizationUpdateDto = organizationService.loadById(1);
-        Organization organization = OrganizationUpdateDto.getOrganizationFromUpdateDto(organizationUpdateDto);
+        OrganizationUpdateDto organization = organizationService.loadById(1);
         mockMvc.perform(
                         get("/api/organization/1")
                                 .contentType(MediaType.APPLICATION_JSON))
