@@ -41,6 +41,9 @@ public class OfficeDaoImpl implements OfficeDao {
         if (name!=null){
             list = list.stream().filter(office->office.getName().equals(name)).collect(Collectors.toList());
         }
+        if (phone!=null){
+            list = list.stream().filter(office->office.getPhone().equals(phone)).collect(Collectors.toList());
+        }
            list = list.stream().filter(office -> office.asActive()==isActive).collect(Collectors.toList());
 
         return list;
