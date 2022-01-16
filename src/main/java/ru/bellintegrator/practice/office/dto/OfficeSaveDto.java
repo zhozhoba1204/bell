@@ -13,8 +13,59 @@ public class OfficeSaveDto {
         public String phone;
         public boolean isActive;
 
-        public static Office getOfficeFromSaveDto(Organization organization, OfficeSaveDto officeSaveDto) {
+    public OfficeSaveDto() {
+    }
+
+    public OfficeSaveDto(Integer orgId, String name, String address, String phone, boolean isActive) {
+        this.orgId = orgId;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
+
+    public OfficeSaveDto(String name) {
+        this.name = name;
+    }
+
+    public static Office getOfficeFromSaveDto(Organization organization, OfficeSaveDto officeSaveDto) {
             return new Office(officeSaveDto.name, organization, officeSaveDto.address,
                     officeSaveDto.phone, officeSaveDto.isActive);
         }
+
+    public Integer getOrgId() {
+        return orgId;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public boolean asActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+    }
+}
