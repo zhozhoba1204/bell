@@ -101,6 +101,24 @@ public class User {
     }
 
     /**
+     * Конструктор для тестов
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param position
+     * @param phone
+     * @param isIdentified
+     */
+    public User(String firstName, String middleName, String lastName, String position, String phone, boolean isIdentified) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.position = position;
+        this.phone = phone;
+        this.isIdentified = isIdentified;
+    }
+
+    /**
      * Конструктор
      * @param firstName
      * @param middleName
