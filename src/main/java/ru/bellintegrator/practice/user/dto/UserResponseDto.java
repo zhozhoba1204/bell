@@ -26,5 +26,41 @@ public class UserResponseDto {
             return new UserResponseDto(user.getId(), user.getFirstName(), user.getLastName(), user.getMiddleName(),
                     user.getPosition());
       }
+
+      public Integer getId() {
+            return id;
+      }
+
+      public String getFirstName() {
+            return firstName;
+      }
+
+      public void setFirstName(String firstName) {
+            this.firstName = firstName;
+      }
+
+      public String getSecondName() {
+            return secondName;
+      }
+
+      public void setSecondName(String secondName) {
+            this.secondName = secondName;
+      }
+
+      public String getMiddleName() {
+            return middleName;
+      }
+
+      public void setMiddleName(String middleName) {
+            this.middleName = middleName;
+      }
+
+      public String getPosition() {
+            return position;
+      }
+
+      public void setPosition(String position) {
+            this.position = position;
+      }
 }
 

@@ -22,6 +22,27 @@ public class UserSaveDto {
     public String citizenshipCode;
     public boolean isIdentified;
 
+    public UserSaveDto() {
+    }
+
+    public UserSaveDto(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public UserSaveDto(Integer officeId, String firstName, String secondName, String middleName, String position, String phone, String docName, String docNumber, String docDate, String citizenshipCode, boolean isIdentified) {
+        this.officeId = officeId;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.middleName = middleName;
+        this.position = position;
+        this.phone = phone;
+        this.docName = docName;
+        this.docNumber = docNumber;
+        this.docDate = docDate;
+        this.citizenshipCode = citizenshipCode;
+        this.isIdentified = isIdentified;
+    }
+
     public static User getUserFromSaveDto(Office office, Citizenship citizenship, UserSaveDto userSaveDto) {
         DocumentInfo documentInfo = new DocumentInfo(userSaveDto.docNumber, userSaveDto.docDate, userSaveDto.docName);
         return new User(userSaveDto.firstName, userSaveDto.middleName, userSaveDto.secondName,
