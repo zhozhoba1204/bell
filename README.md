@@ -1,7 +1,7 @@
 # Bell Integrator
 Запуск приложения: practice-0.0.1-SNAPSHOT.jar
 
-##Требования к проекту:
+## Требования к проекту:
 * Все возвращаемые типы данных находятся в параметре data
 * В случае ошибки возвращается парметр error
 * Везде, где не написан метод, использовать POST.
@@ -20,17 +20,16 @@
 "error":"текст ошибки"
 }
 ```
-##Инструкция:
+## Инструкция:
 1. Для получения списка организаций:</br>
 http://localhost:8080/api/organization/list
-</br>
-In:</br>
+   </br>In:</br>
 ![](readme/org.list.input.png)
    </br>Пример:</br>
 ![](readme/postman/organization.list.in.png)
    </br>Out:</br>
 ![](readme/org.list.output.png)
-</br>Пример:</br>
+   </br>Пример:</br>
 ![](readme/postman/organization.list.out.png)
 
 
@@ -143,7 +142,7 @@ http://localhost:8080/api/organization/save
    </br>Out:</br>
    ![](readme/postman/success.png)
 
-###Справочники
+### Справочники
 
 1. Справочник документов:</br>
     http://localhost:8080/api/docs
@@ -157,7 +156,7 @@ http://localhost:8080/api/organization/save
     ![](readme/countries.output.png)
 
 
-###При возникновении ошибки:
+### При возникновении ошибки:
    Пример out:</br>
    ![](readme/postman/error.png)
 
