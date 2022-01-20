@@ -23,14 +23,13 @@
 ## Инструкция:
 1. Для получения списка организаций:</br>
 http://localhost:8080/api/organization/list
-</br>
-In:</br>
+   </br>In:</br>
 ![](readme/org.list.input.png)
    </br>Пример:</br>
 ![](readme/postman/organization.list.in.png)
    </br>Out:</br>
 ![](readme/org.list.output.png)
-</br>Пример:</br>
+   </br>Пример:</br>
 ![](readme/postman/organization.list.out.png)
 
 
