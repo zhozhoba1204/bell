@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.office.dto;
 
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 
 public class OfficeResponseDto {
 
@@ -36,7 +36,7 @@ public class OfficeResponseDto {
         isActive = isActive;
     }
 
-    public static OfficeResponseDto getResponseDtoFromOffice(Office office){
+    public static OfficeResponseDto getResponseDtoFromOffice(OfficeEntity office){
         return new OfficeResponseDto(office.getId(), office.getName(), office.asActive());
     }
 }

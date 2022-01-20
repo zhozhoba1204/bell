@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.citizenship.dao;
 
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ public interface CitizenshipDao {
      * @param citizenshipCode
      * @return
      */
-    Citizenship loadByCitizenshipCode(String citizenshipCode);
+    CitizenshipEntity loadByCitizenshipCode(String citizenshipCode);
 
     /**
      * Получить все страны из справочника
      * @return
      */
-    List<Citizenship> all();
+    List<CitizenshipEntity> all();
 }

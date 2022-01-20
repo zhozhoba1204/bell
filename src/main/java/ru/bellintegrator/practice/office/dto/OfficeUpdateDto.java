@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.office.dto;
 
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import javax.validation.constraints.NotEmpty;
 
 public class OfficeUpdateDto {
@@ -29,7 +29,7 @@ public class OfficeUpdateDto {
         this.isActive = isActive;
     }
 
-    public static OfficeUpdateDto getUpdateDtoFromOffice(Office office){
+    public static OfficeUpdateDto getUpdateDtoFromOffice(OfficeEntity office){
         return new OfficeUpdateDto(office.getId(), office.getName(), office.getAddress(),
                 office.getPhone(), office.asActive());
     }

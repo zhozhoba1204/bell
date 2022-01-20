@@ -1,23 +1,28 @@
 package ru.bellintegrator.practice.office.dao;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.office.dto.OfficeRequestDto;
 import ru.bellintegrator.practice.office.dto.OfficeUpdateDto;
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import ru.bellintegrator.practice.organizatrion.dao.OrganizationDao;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+
 /**
  * {@inheritDoc}
  */
 @Repository
 public class OfficeDaoImpl implements OfficeDao {
 
-    private OrganizationDao organizationDao;
+    private final OrganizationDao organizationDao;
     private final EntityManager em;
 
     @Autowired
@@ -30,31 +35,35 @@ public class OfficeDaoImpl implements OfficeDao {
      * {@inheritDoc}
      */
     @Override
-    public List<Office> filter(OfficeRequestDto officeRequestDto) {
-        Integer orgId = officeRequestDto.getOrgId();
-        String name = officeRequestDto.getName();
-        String phone = officeRequestDto.getPhone();
-        boolean isActive = officeRequestDto.asActive();
+    public List<OfficeEntity> filter(OfficeRequestDto officeRequestDto) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<OfficeEntity> criteriaQuery = cb.createQuery(OfficeEntity.class);
+        Root<OfficeEntity> officeRoot = criteriaQuery.from(OfficeEntity.class);
+        Root<OrganizationEntity> organizationRoot = criteriaQuery.from(OrganizationEntity.class);
 
-        Organization organization = organizationDao.loadById(orgId);
-        List<Office> list = organization.getOffices();
-        if (name!=null){
-            list = list.stream().filter(office->office.getName().equals(name)).collect(Collectors.toList());
-        }
-        if (phone!=null){
-            list = list.stream().filter(office->office.getPhone().equals(phone)).collect(Collectors.toList());
-        }
-           list = list.stream().filter(office -> office.asActive()==isActive).collect(Collectors.toList());
+        List<Predicate> officePredicates = new ArrayList<>();
+        officePredicates.add(cb.equal(
+                organizationRoot.get("id"), officeRequestDto.getOrgId()));
+        Optional.ofNullable(officeRequestDto.getName()).ifPresent(name -> officePredicates.add(
+                cb.equal(officeRoot.get("name"), name)));
+        Optional.ofNullable(officeRequestDto.getPhone()).ifPresent(phone -> officePredicates
+                .add(cb.equal(officeRoot.get("phone"), phone)));
 
-        return list;
+        Optional.ofNullable(officeRequestDto.asActive()).ifPresent(isActive -> officePredicates.add(
+                    cb.equal(officeRoot.get("isActive"), isActive)));
+
+        Predicate[] predicates = officePredicates.toArray(new Predicate[officePredicates.size()]);
+        criteriaQuery.select(officeRoot).where(predicates);
+
+        return em.createQuery(criteriaQuery).getResultList();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Office loadById(Integer id) {
-        return em.find(Office.class, id);
+    public OfficeEntity loadById(Integer id) {
+        return em.find(OfficeEntity.class, id);
     }
 
     /**
@@ -62,24 +71,23 @@ public class OfficeDaoImpl implements OfficeDao {
      */
     @Override
     public void update(OfficeUpdateDto officeUpdateDto) {
-        Office of = em.find(Office.class, officeUpdateDto.id);
-        of.setName(officeUpdateDto.name);
-        of.setAddress(officeUpdateDto.address);
+        OfficeEntity office = em.find(OfficeEntity.class, officeUpdateDto.id);
+        office.setName(officeUpdateDto.name);
+        office.setAddress(officeUpdateDto.address);
         if (officeUpdateDto.phone!=null) {
-            of.setPhone(officeUpdateDto.phone);
+            office.setPhone(officeUpdateDto.phone);
         }
-        if (officeUpdateDto.isActive && officeUpdateDto.isActive!=of.asActive()) {
-            of.setIsActive(officeUpdateDto.isActive);
+        if (officeUpdateDto.isActive && officeUpdateDto.isActive!=office.asActive()) {
+            office.setIsActive(officeUpdateDto.isActive);
         }
-        Session session = em.unwrap(Session.class);
-        session.update(of);
+        em.merge(office);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(Office office) {
+    public void save(OfficeEntity office) {
         em.persist(office);
     }
 }

@@ -8,9 +8,9 @@ import ru.bellintegrator.practice.office.dto.OfficeRequestDto;
 import ru.bellintegrator.practice.office.dto.OfficeResponseDto;
 import ru.bellintegrator.practice.office.dto.OfficeSaveDto;
 import ru.bellintegrator.practice.office.dto.OfficeUpdateDto;
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import ru.bellintegrator.practice.organizatrion.dao.OrganizationDao;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 /**
@@ -33,7 +33,7 @@ public class OfficeServiceImpl implements OfficeService{
      */
     @Override
     public List<OfficeResponseDto> filter(OfficeRequestDto officeRequestDto) {
-        List<Office> daoList = officeDao.filter(officeRequestDto);
+        List<OfficeEntity> daoList = officeDao.filter(officeRequestDto);
         return daoList.stream()
                 .map(OfficeResponseDto ::getResponseDtoFromOffice)
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class OfficeServiceImpl implements OfficeService{
      */
     @Override
     public OfficeUpdateDto loadById(Integer id) {
-        Office office = officeDao.loadById(id);
+        OfficeEntity office = officeDao.loadById(id);
         OfficeUpdateDto result = OfficeUpdateDto.getUpdateDtoFromOffice(office);
         return result;
     }
@@ -59,8 +59,8 @@ public class OfficeServiceImpl implements OfficeService{
      */
     @Override
     public void save(OfficeSaveDto officeSaveDto){
-        Organization organization = organizationDao.loadById(officeSaveDto.orgId);
-        Office office = OfficeSaveDto.getOfficeFromSaveDto(organization, officeSaveDto);
+        OrganizationEntity organization = organizationDao.loadById(officeSaveDto.orgId);
+        OfficeEntity office = OfficeSaveDto.getOfficeFromSaveDto(organization, officeSaveDto);
         organization.getOffices().add(office);
         officeDao.save(office);
     }

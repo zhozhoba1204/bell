@@ -2,8 +2,7 @@ package ru.bellintegrator.practice.citizenship.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
-import ru.bellintegrator.practice.documents.model.DocumentType;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -24,21 +23,21 @@ public class CitizenshipDaoImpl implements CitizenshipDao {
      * {@inheritDoc}
      */
     @Override
-    public Citizenship loadByCitizenshipCode(String citizenshipCode) {
-        Query query = em.createQuery("select c from Citizenship as c where citizenship_code =?1", Citizenship.class);
+    public CitizenshipEntity loadByCitizenshipCode(String citizenshipCode) {
+        Query query = em.createQuery("select c from CitizenshipEntity as c where citizenship_code =?1", CitizenshipEntity.class);
                 query.setParameter(1,citizenshipCode)
                         .setFirstResult(0)
                         .setMaxResults(1);
-        Citizenship result = (Citizenship) query.getSingleResult();
+        CitizenshipEntity result = (CitizenshipEntity) query.getSingleResult();
         return result;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Citizenship> all() {
-        Query query = em.createNativeQuery("select * from Citizenship", Citizenship.class);
-        List<Citizenship> result = query.getResultList();
+    public List<CitizenshipEntity> all() {
+        Query query = em.createNativeQuery("select * from Citizenship", CitizenshipEntity.class);
+        List<CitizenshipEntity> result = query.getResultList();
         return result;
     }
 }

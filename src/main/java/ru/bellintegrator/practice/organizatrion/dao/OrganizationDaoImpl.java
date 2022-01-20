@@ -1,11 +1,10 @@
 package ru.bellintegrator.practice.organizatrion.dao;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,6 +12,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 /**
  * {@inheritDoc}
  */
@@ -30,39 +31,32 @@ public class OrganizationDaoImpl implements OrganizationDao{
      * {@inheritDoc}
      */
     @Override
-    public List<Organization> filter(OrganizationRequestDto organizationRequestDto) {
-        String name = organizationRequestDto.name;
-        String inn = organizationRequestDto.inn;
-        boolean isActive = organizationRequestDto.isActive;
+    public List<OrganizationEntity> filter(OrganizationRequestDto organizationRequestDto) {
 
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
-        Root<Organization> root = criteriaQuery.from(Organization.class);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<OrganizationEntity> criteriaQuery = cb.createQuery(OrganizationEntity.class);
+        Root<OrganizationEntity> root = criteriaQuery.from(OrganizationEntity.class);
 
-        List<Predicate> predicates = new ArrayList<>();
-            predicates.add(
-                    criteriaBuilder.equal(root.get("name"), name));
-        if (inn != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("inn"), inn));
-        }
-        if (isActive) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("isActive"), isActive));
-        }
+        List<Predicate> orgPredicates = new ArrayList<>();
+            orgPredicates.add(
+                    cb.equal(root.get("name"), organizationRequestDto.name));
+        Optional.ofNullable(organizationRequestDto.getInn()).ifPresent(inn -> orgPredicates
+                .add(cb.equal(root.get("inn"), inn)));
 
-        Predicate [] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-        criteriaQuery.select(root).where(predicatesarr);
+        Optional.ofNullable(organizationRequestDto.asActive()).ifPresent(isActive -> orgPredicates.add(
+                cb.equal(root.get("isActive"), isActive)));
+        Predicate [] predicates = orgPredicates.toArray(new Predicate[orgPredicates.size()]);
+        criteriaQuery.select(root).where(predicates);
 
-        List<Organization> result = em.createQuery(criteriaQuery).getResultList();
+        List<OrganizationEntity> result = em.createQuery(criteriaQuery).getResultList();
         return result;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public Organization loadById(Integer id) {
-        return em.find(Organization.class, id);
+    public OrganizationEntity loadById(Integer id) {
+        return em.find(OrganizationEntity.class, id);
     }
 
     /**
@@ -70,7 +64,7 @@ public class OrganizationDaoImpl implements OrganizationDao{
      */
     @Override
     public void update(OrganizationUpdateDto organization) {
-        Organization org = em.find(Organization.class, organization.id);
+        OrganizationEntity org = em.find(OrganizationEntity.class, organization.id);
         org.setName(organization.name);
         org.setFullName(organization.fullName);
         org.setInn(organization.inn);
@@ -82,14 +76,13 @@ public class OrganizationDaoImpl implements OrganizationDao{
         if (organization.isActive && organization.isActive!=org.asActive()) {
             org.setIsActive(organization.isActive);
         }
-        Session session = em.unwrap(Session.class);
-        session.update(org);
+        em.merge(org);
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(Organization organization) {
+    public void save(OrganizationEntity organization) {
         em.persist(organization);
     }
 }

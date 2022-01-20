@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.organizatrion.dto;
 
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 
 public class OrganizationResponseDto {
 
@@ -34,7 +34,7 @@ public class OrganizationResponseDto {
         isActive = isActive;
     }
 
-    public static OrganizationResponseDto getDtoFromOrganization(Organization organization){
+    public static OrganizationResponseDto getDtoFromOrganization(OrganizationEntity organization){
 return new OrganizationResponseDto(organization.getId(), organization.getName(), organization.asActive());
     }
 

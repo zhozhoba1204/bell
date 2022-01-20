@@ -1,26 +1,31 @@
 package ru.bellintegrator.practice.user.dao;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.citizenship.dao.CitizenshipDao;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
 import ru.bellintegrator.practice.documents.dao.DocumentDao;
-import ru.bellintegrator.practice.documents.model.DocumentInfo;
+import ru.bellintegrator.practice.documents.model.DocumentTypeEntity;
 import ru.bellintegrator.practice.office.dao.OfficeDao;
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import ru.bellintegrator.practice.user.dto.UserRequestDto;
 import ru.bellintegrator.practice.user.dto.UserUpdateDto;
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
  * {@inheritDoc}
  */
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
     private final OfficeDao officeDao;
     private final EntityManager em;
     private final DocumentDao documentDao;
@@ -28,64 +33,55 @@ public class UserDaoImpl implements UserDao{
 
 
     @Autowired
-    public UserDaoImpl(OfficeDao officeDao, EntityManager em, DocumentDao documentDao,CitizenshipDao citizenshipDao) {
+    public UserDaoImpl(OfficeDao officeDao, EntityManager em, DocumentDao documentDao, CitizenshipDao citizenshipDao) {
         this.officeDao = officeDao;
         this.em = em;
         this.documentDao = documentDao;
         this.citizenshipDao = citizenshipDao;
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<User> filter(UserRequestDto userRequestDto) {
-        Integer officeId = userRequestDto.officeId;
-        String firstName = userRequestDto.firstName;
-        String lastName = userRequestDto.lastName;
-        String middleName = userRequestDto.middleName;
-        String position = userRequestDto.position;
-        Integer docCode = userRequestDto.docCode;
-        String citizenshipCode = userRequestDto.citizenshipCode;
+    public List<UserEntity> filter(UserRequestDto userRequestDto) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<UserEntity> criteriaQuery = cb.createQuery(UserEntity.class);
+        Root<UserEntity> userRoot = criteriaQuery.from(UserEntity.class);
+        Root<OfficeEntity> officeRoot = criteriaQuery.from(OfficeEntity.class);
+        Root<DocumentTypeEntity> documentTypeRoot = criteriaQuery.from(DocumentTypeEntity.class);
+        Root<CitizenshipEntity> citizenshipRoot = criteriaQuery.from(CitizenshipEntity.class);
 
-        Office office = officeDao.loadById(officeId);
-        List<User> list = office.getUsers();
-        if (firstName!=null){
-            list = list.stream().filter(user->user.getFirstName().equals(firstName)).collect(Collectors.toList());
-        }
-        if (lastName!=null){
-            list = list.stream().filter(user->user.getLastName().equals(lastName)).collect(Collectors.toList());
-        }
-        if (middleName!=null){
-            list = list.stream().filter(user->user.getMiddleName().equals(middleName)).collect(Collectors.toList());
-        }
-        if (position!=null){
-            list = list.stream().filter(user->user.getPosition().equals(position)).collect(Collectors.toList());
-        }
-        if (docCode!=null){
-            List<DocumentInfo> documentInfo = documentDao.loadByDocumentType(docCode);
-           List<User> users = new ArrayList<>();
-            for (int i = 0; i<list.size();i++){
-                User u = list.get(i);
-                for (int j = 0; j<documentInfo.size(); j++){
-                    if (u.getId().equals(documentInfo.get(j).getUser().getId())){
-                        users.add(u);
-                    }
-                }
-            }
-            list = users;
-        }
-        if (citizenshipCode!=null){
-            list = list.stream().filter(user->user.getCitizenship().equals(citizenshipDao.loadByCitizenshipCode(citizenshipCode))).collect(Collectors.toList());
-        }
-        return list;
+        List<Predicate> userPredicates = new ArrayList<>();
+
+        userPredicates.add(cb.equal(
+                officeRoot.get("id"), userRequestDto.officeId));
+        Optional.ofNullable(userRequestDto.firstName).ifPresent(firstName -> userPredicates.add(
+                cb.equal(userRoot.get("firstName"), firstName)));
+        Optional.ofNullable(userRequestDto.middleName).ifPresent(middleName -> userPredicates.add(
+                cb.equal(userRoot.get("middleName"), middleName)));
+        Optional.ofNullable(userRequestDto.lastName).ifPresent(lastName -> userPredicates.add(
+                cb.equal(userRoot.get("lastName"), lastName)));
+        Optional.ofNullable(userRequestDto.position).ifPresent(position -> userPredicates.add(
+                cb.equal(userRoot.get("position"), position)));
+        Optional.ofNullable(userRequestDto.docCode).ifPresent(docCode -> userPredicates
+                .add(cb.equal(documentTypeRoot.get("docCode"), docCode)));
+        Optional.ofNullable(userRequestDto.citizenshipCode).ifPresent(citizenshipCode -> userPredicates
+                .add(cb.equal(citizenshipRoot.get("citizenshipCode"), citizenshipCode)));
+
+        Predicate[] predicates = userPredicates.toArray(new Predicate[userPredicates.size()]);
+        criteriaQuery.select(userRoot).where(predicates);
+
+        return em.createQuery(criteriaQuery).getResultList()
+                .stream().distinct().collect(Collectors.toList());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public User loadById(Integer id) {
-        return em.find(User.class, id);
+    public UserEntity loadById(Integer id) {
+        return em.find(UserEntity.class, id);
     }
 
     /**
@@ -93,51 +89,40 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public void update(UserUpdateDto userUpdateDto) {
+        UserEntity user = em.find(UserEntity.class, userUpdateDto.id);
 
-        User user = em.find(User.class, userUpdateDto.id);
-        if (userUpdateDto.officeId!=null){
-        Office office = em.find(Office.class,userUpdateDto.officeId);
-        user.setOffice(office);
-        }
+        Optional.ofNullable(userUpdateDto.officeId)
+                .ifPresent(officeId -> user.setOffice(em.find(OfficeEntity.class, userUpdateDto.officeId)));
 
         user.setFirstName(userUpdateDto.firstName);
 
-        if (userUpdateDto.secondName!=null) {
-            user.setLastName(userUpdateDto.secondName);
-        }
-        if (userUpdateDto.middleName!=null) {
-            user.setMiddleName(userUpdateDto.middleName);
-        }
+        Optional.ofNullable(userUpdateDto.secondName)
+                .ifPresent(secondName -> user.setLastName(userUpdateDto.secondName));
+        Optional.ofNullable(userUpdateDto.middleName)
+                .ifPresent(middleName -> user.setMiddleName(userUpdateDto.middleName));
 
         user.setPosition(userUpdateDto.position);
 
-        if (userUpdateDto.phone!=null) {
-            user.setPhone(userUpdateDto.phone);
-        }
-        if (userUpdateDto.docNumber!=null){
-            documentDao.updateDocNumber(userUpdateDto.id, userUpdateDto.docNumber);
-        }
-        if (userUpdateDto.docDate!=null){
-            documentDao.updateDocDate(userUpdateDto.id, userUpdateDto.docDate);
-        }
-        if (userUpdateDto.docName!=null){
-            documentDao.updateDocName(userUpdateDto.id, userUpdateDto.docName);
-        }
-        if (userUpdateDto.citizenshipCode!=null) {
-            user.setCitizenship(citizenshipDao.loadByCitizenshipCode(userUpdateDto.citizenshipCode));
-        }
-        if (userUpdateDto.isIdentified) {
-            user.setIsIdentified(userUpdateDto.isIdentified);
-        }
-        Session session = em.unwrap(Session.class);
-        session.update(user);
+        Optional.ofNullable(userUpdateDto.phone)
+                .ifPresent(phone -> user.setPhone(userUpdateDto.phone));
+        Optional.ofNullable(userUpdateDto.docNumber)
+                .ifPresent(docNumber ->documentDao.updateDocNumber(userUpdateDto.id, userUpdateDto.docNumber));
+        Optional.ofNullable(userUpdateDto.docDate)
+                .ifPresent(docDate -> documentDao.updateDocDate(userUpdateDto.id, userUpdateDto.docDate));
+        Optional.ofNullable(userUpdateDto.docName)
+                .ifPresent(docName -> documentDao.updateDocName(userUpdateDto.id, userUpdateDto.docName));
+        Optional.ofNullable(userUpdateDto.citizenshipCode)
+                .ifPresent(citizenshipCode -> user.setCitizenship(citizenshipDao.loadByCitizenshipCode(userUpdateDto.citizenshipCode)));
+        Optional.of(userUpdateDto.isIdentified)
+                .ifPresent(isIdentified -> user.setIsIdentified(userUpdateDto.isIdentified));
+        em.merge(user);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(User user) {
+    public void save(UserEntity user) {
         em.persist(user);
     }
 }

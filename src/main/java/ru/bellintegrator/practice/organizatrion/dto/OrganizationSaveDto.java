@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.organizatrion.dto;
 
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import javax.validation.constraints.NotEmpty;
 
 public class OrganizationSaveDto {
@@ -31,8 +31,8 @@ public class OrganizationSaveDto {
         this.name = name;
     }
 
-    public static Organization getOrganizationFromSaveDto(OrganizationSaveDto orgSaveDto) {
-        return new Organization(orgSaveDto.name,
+    public static OrganizationEntity getOrganizationFromSaveDto(OrganizationSaveDto orgSaveDto) {
+        return new OrganizationEntity(orgSaveDto.name,
                 orgSaveDto.fullName, orgSaveDto.inn,
                 orgSaveDto.kpp, orgSaveDto.address,
                 orgSaveDto.phone, orgSaveDto.isActive);

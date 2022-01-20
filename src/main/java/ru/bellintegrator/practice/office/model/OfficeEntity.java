@@ -1,7 +1,7 @@
 package ru.bellintegrator.practice.office.model;
 
-import ru.bellintegrator.practice.organizatrion.model.Organization;
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Office")
-public class Office {
+public class OfficeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -43,7 +43,7 @@ public class Office {
      */
     @ManyToOne
     @JoinColumn(name = "org_id")
-    private Organization organization;
+    private OrganizationEntity organization;
 
     /**
      * Адрес
@@ -62,7 +62,7 @@ public class Office {
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "office_id")
-    private List<User> users;
+    private List<UserEntity> users;
 
     /**
      * Статус активности
@@ -73,7 +73,7 @@ public class Office {
     /**
      * Конструктор
      */
-    public Office() {
+    public OfficeEntity() {
     }
 
     /**
@@ -83,7 +83,7 @@ public class Office {
      * @param phone
      * @param isActive
      */
-    public Office(String name, String address, String phone, boolean isActive) {
+    public OfficeEntity(String name, String address, String phone, boolean isActive) {
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -98,7 +98,7 @@ public class Office {
      * @param phone
      * @param isActive
      */
-    public Office(String name, Organization organization, String address, String phone, boolean isActive) {
+    public OfficeEntity(String name, OrganizationEntity organization, String address, String phone, boolean isActive) {
         this.name = name;
         this.organization = organization;
         this.address = address;
@@ -110,7 +110,7 @@ public class Office {
         this.name = name;
     }
 
-    public void setOrganization(Organization organization) {
+    public void setOrganization(OrganizationEntity organization) {
         this.organization = organization;
     }
 
@@ -134,7 +134,7 @@ public class Office {
         return name;
     }
 
-    public Organization getOrganization() {
+    public OrganizationEntity getOrganization() {
         return organization;
     }
 
@@ -146,11 +146,11 @@ public class Office {
         return phone;
     }
 
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
 

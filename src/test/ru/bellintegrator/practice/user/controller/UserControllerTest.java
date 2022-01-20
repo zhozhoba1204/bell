@@ -65,7 +65,7 @@ class UserControllerTest {
     public void loadByIdShouldReturnSuccess() throws Exception {
         UserUpdateDto userUpdateDto = userService.loadById(1);
         mockMvc.perform(
-                        get("/api/user/2")
+                        get("/api/user/1")
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.firstName", is(userUpdateDto.getFirstName())))

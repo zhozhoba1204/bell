@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.bellintegrator.practice.citizenship.dao.CitizenshipDao;
 import ru.bellintegrator.practice.citizenship.dto.CitizenshipDto;
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ public class CitizenshipServiceImpl implements CitizenshipService{
      */
     @Override
     public List<CitizenshipDto> all() {
-        List<Citizenship> list = citizenshipDao.all();
+        List<CitizenshipEntity> list = citizenshipDao.all();
         List<CitizenshipDto> result = list.stream()
                 .map(CitizenshipDto::getDtoFromCitizenship)
                 .collect(Collectors.toList());

@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.user.dto;
 
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 
 public class UserResponseDto {
       public Integer id;
@@ -16,13 +16,13 @@ public class UserResponseDto {
             this.middleName = middleName;
             this.position = position;
       }
-      public static UserResponseDto getDtoFromUser(User user){
+      public static UserResponseDto getDtoFromUser(UserEntity user){
             return new UserResponseDto(user.getId(),
                     user.getFirstName(), user.getLastName(),
                     user.getMiddleName(), user.getPosition());
       }
 
-      public static UserResponseDto getResponseDtoFromUser(User user) {
+      public static UserResponseDto getResponseDtoFromUser(UserEntity user) {
             return new UserResponseDto(user.getId(), user.getFirstName(), user.getLastName(), user.getMiddleName(),
                     user.getPosition());
       }

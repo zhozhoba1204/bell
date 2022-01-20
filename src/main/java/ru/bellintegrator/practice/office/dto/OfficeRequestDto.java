@@ -6,12 +6,12 @@ public class OfficeRequestDto {
     public Integer orgId;
     public String name;
     public String phone;
-    public boolean isActive;
+    public Boolean isActive;
 
     public OfficeRequestDto() {
     }
 
-    public OfficeRequestDto(Integer orgId, String name, String phone, boolean isActive) {
+    public OfficeRequestDto(Integer orgId, String name, String phone, Boolean isActive) {
         this.orgId = orgId;
         this.name = name;
         this.phone = phone;
@@ -38,11 +38,11 @@ public class OfficeRequestDto {
         this.phone = phone;
     }
 
-    public boolean asActive() {
+    public Boolean asActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 }

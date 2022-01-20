@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.citizenship.dao.CitizenshipDao;
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
 import ru.bellintegrator.practice.office.dao.OfficeDao;
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import ru.bellintegrator.practice.user.dao.UserDao;
 import ru.bellintegrator.practice.user.dto.UserRequestDto;
 import ru.bellintegrator.practice.user.dto.UserResponseDto;
 import ru.bellintegrator.practice.user.dto.UserSaveDto;
 import ru.bellintegrator.practice.user.dto.UserUpdateDto;
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public List<UserResponseDto> filter(UserRequestDto userRequestDto) {
-        List<User> daoList = userDao.filter(userRequestDto);
+        List<UserEntity> daoList = userDao.filter(userRequestDto);
         return daoList.stream()
                 .map(UserResponseDto::getResponseDtoFromUser)
                 .collect(Collectors.toList());
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public UserUpdateDto loadById(Integer id) {
-        User user = userDao.loadById(id);
+        UserEntity user = userDao.loadById(id);
         UserUpdateDto result = UserUpdateDto.getUpdateDtoFromUser(user);
         return result;
     }
@@ -64,9 +64,9 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public void save(UserSaveDto userSaveDto) {
-        Office office = officeDao.loadById(userSaveDto.officeId);
-        Citizenship citizenship = citizenshipDao.loadByCitizenshipCode(userSaveDto.citizenshipCode);
-        User user = UserSaveDto.getUserFromSaveDto(office, citizenship, userSaveDto);
+        OfficeEntity office = officeDao.loadById(userSaveDto.officeId);
+        CitizenshipEntity citizenship = citizenshipDao.loadByCitizenshipCode(userSaveDto.citizenshipCode);
+        UserEntity user = UserSaveDto.getUserFromSaveDto(office, citizenship, userSaveDto);
         userDao.save(user);
     }
 }

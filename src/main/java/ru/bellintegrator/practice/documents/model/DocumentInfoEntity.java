@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.documents.model;
 
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,11 +18,11 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "Document_info")
-public class DocumentInfo implements Serializable {
+public class DocumentInfoEntity implements Serializable {
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    private User user;
+    private UserEntity user;
 
     /**
      * Служебное поле hibernate
@@ -53,12 +53,12 @@ public class DocumentInfo implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "doc_name",insertable = false,updatable = false)
-    private DocumentType docType;
+    private DocumentTypeEntity docType;
 
     /**
      * Конструктор
      */
-    public DocumentInfo() {
+    public DocumentInfoEntity() {
     }
     /**
      * Конструктор
@@ -66,7 +66,7 @@ public class DocumentInfo implements Serializable {
      * @param docDate
      * @param docName
      */
-    public DocumentInfo(String docNumber, String docDate, String docName) {
+    public DocumentInfoEntity(String docNumber, String docDate, String docName) {
         this.docNumber = docNumber;
         this.docDate = docDate;
         this.docName = docName;
@@ -76,7 +76,7 @@ public class DocumentInfo implements Serializable {
      * @param docNumber
      * @param docDate
      */
-    public DocumentInfo(String docNumber, String docDate) {
+    public DocumentInfoEntity(String docNumber, String docDate) {
         this.docNumber = docNumber;
         this.docDate = docDate;
     }
@@ -84,15 +84,15 @@ public class DocumentInfo implements Serializable {
      * Конструктор
      * @param docNumber
      */
-    public DocumentInfo(String docNumber) {
+    public DocumentInfoEntity(String docNumber) {
         this.docNumber = docNumber;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

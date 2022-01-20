@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.bellintegrator.practice.documents.dao.DocumentDao;
 import ru.bellintegrator.practice.documents.dto.DocumentDto;
-import ru.bellintegrator.practice.documents.model.DocumentType;
+import ru.bellintegrator.practice.documents.model.DocumentTypeEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +24,7 @@ public class DocServiceImpl implements DocService{
      */
     @Override
     public List<DocumentDto> all() {
-        List<DocumentType> list = documentDao.all();
+        List<DocumentTypeEntity> list = documentDao.all();
         List<DocumentDto> result = list.stream()
                 .map(DocumentDto::getDtoFromDocument)
                 .collect(Collectors.toList());

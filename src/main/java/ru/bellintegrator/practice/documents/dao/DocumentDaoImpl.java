@@ -2,15 +2,11 @@ package ru.bellintegrator.practice.documents.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.documents.model.DocumentInfo;
-import ru.bellintegrator.practice.documents.model.DocumentType;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.documents.model.DocumentInfoEntity;
+import ru.bellintegrator.practice.documents.model.DocumentTypeEntity;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.print.Doc;
 import java.util.List;
 /**
  * {@inheritDoc}
@@ -29,20 +25,20 @@ public class DocumentDaoImpl implements DocumentDao {
      * {@inheritDoc}
      */
     @Override
-    public DocumentType loadByDocCode(Integer docCode) {
-        Query query = em.createNativeQuery("select * from Document_type where doc_code =?1", DocumentType.class);
+    public DocumentTypeEntity loadByDocCode(Integer docCode) {
+        Query query = em.createNativeQuery("select * from Document_type where doc_code =?1", DocumentTypeEntity.class);
         query.setParameter(1,docCode);
-        DocumentType result = (DocumentType) query.getSingleResult();
+        DocumentTypeEntity result = (DocumentTypeEntity) query.getSingleResult();
       return result;
     }
     /**
      * {@inheritDoc}
      */
-    public List<DocumentInfo> loadByDocumentType(Integer docCode){
-        DocumentType documentType = loadByDocCode(docCode);
-        Query query = em.createNativeQuery("select * from Document_info where doc_name =?1", DocumentInfo.class);
+    public List<DocumentInfoEntity> loadByDocumentType(Integer docCode){
+        DocumentTypeEntity documentType = loadByDocCode(docCode);
+        Query query = em.createNativeQuery("select * from Document_info where doc_name =?1", DocumentInfoEntity.class);
         query.setParameter(1,documentType.getDocName());
-        List<DocumentInfo> result = query.getResultList();
+        List<DocumentInfoEntity> result = query.getResultList();
         return result;
     }
     /**
@@ -75,9 +71,9 @@ public class DocumentDaoImpl implements DocumentDao {
     /**
      * {@inheritDoc}
      */
-    public List<DocumentType> all(){
-        Query query = em.createNativeQuery("select * from Document_type", DocumentType.class);
-        List<DocumentType> result = query.getResultList();
+    public List<DocumentTypeEntity> all(){
+        Query query = em.createNativeQuery("select * from Document_type", DocumentTypeEntity.class);
+        List<DocumentTypeEntity> result = query.getResultList();
         return result;
     }
 }

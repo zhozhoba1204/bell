@@ -1,8 +1,7 @@
 package ru.bellintegrator.practice.office.dto;
 
-import ru.bellintegrator.practice.office.model.Office;
-import ru.bellintegrator.practice.organizatrion.dto.OrganizationSaveDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import javax.validation.constraints.NotEmpty;
 
 public class OfficeSaveDto {
@@ -28,8 +27,8 @@ public class OfficeSaveDto {
         this.name = name;
     }
 
-    public static Office getOfficeFromSaveDto(Organization organization, OfficeSaveDto officeSaveDto) {
-            return new Office(officeSaveDto.name, organization, officeSaveDto.address,
+    public static OfficeEntity getOfficeFromSaveDto(OrganizationEntity organization, OfficeSaveDto officeSaveDto) {
+            return new OfficeEntity(officeSaveDto.name, organization, officeSaveDto.address,
                     officeSaveDto.phone, officeSaveDto.isActive);
         }
 

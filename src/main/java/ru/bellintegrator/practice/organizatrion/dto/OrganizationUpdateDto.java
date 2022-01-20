@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.organizatrion.dto;
 
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -35,7 +35,7 @@ public class OrganizationUpdateDto {
     }
 
 
-    public static OrganizationUpdateDto getUpdateDtoFromOrganization(Organization org) {
+    public static OrganizationUpdateDto getUpdateDtoFromOrganization(OrganizationEntity org) {
         return new OrganizationUpdateDto(org.getId(), org.getName(),
                 org.getFullName(), org.getInn(),
                 org.getKpp(), org.getAddress(),

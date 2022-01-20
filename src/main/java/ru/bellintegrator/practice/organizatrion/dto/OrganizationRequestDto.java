@@ -5,9 +5,9 @@ public class OrganizationRequestDto {
     @NotEmpty(message = "name cannot be null")
     public String name;
     public String inn;
-    public boolean isActive;
+    public Boolean isActive;
 
-    public OrganizationRequestDto(String name, String inn, boolean isActive) {
+    public OrganizationRequestDto(String name, String inn, Boolean isActive) {
         this.name = name;
         this.inn = inn;
         this.isActive = isActive;
@@ -29,11 +29,11 @@ public class OrganizationRequestDto {
         this.inn = inn;
     }
 
-    public boolean asActive() {
+    public Boolean asActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 }

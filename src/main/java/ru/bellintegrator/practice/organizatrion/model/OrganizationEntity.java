@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.organizatrion.model;
 
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Organization")
-public class Organization {
+public class OrganizationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -75,12 +75,12 @@ public class Organization {
      * Список офисов
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "organization")
-    private List<Office> offices;
+    private List<OfficeEntity> offices;
 
     /**
      * Конструктор
      */
-    public Organization() {
+    public OrganizationEntity() {
     }
 
     /**
@@ -93,7 +93,7 @@ public class Organization {
      * @param phone
      * @param isActive
      */
-    public Organization(String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
+    public OrganizationEntity(String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;
@@ -114,7 +114,7 @@ public class Organization {
      * @param phone
      * @param isActive
      */
-    public Organization(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
+    public OrganizationEntity(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;
@@ -179,7 +179,7 @@ public class Organization {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public List<Office> getOffices() {
+    public List<OfficeEntity> getOffices() {
         return offices;
     }
 
@@ -191,7 +191,7 @@ public class Organization {
         isActive = isActive;
     }
 
-    public void setOffices(List<Office> offices) {
+    public void setOffices(List<OfficeEntity> offices) {
         this.offices = offices;
     }
 

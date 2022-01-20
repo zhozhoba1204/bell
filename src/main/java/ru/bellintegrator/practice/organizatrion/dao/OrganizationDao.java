@@ -2,7 +2,7 @@ package ru.bellintegrator.practice.organizatrion.dao;
 
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import java.util.List;
 
 /**
@@ -14,14 +14,14 @@ public interface OrganizationDao {
      *
      * @return список организаций
      */
-    List<Organization> filter(OrganizationRequestDto organizationRequestDto);
+    List<OrganizationEntity> filter(OrganizationRequestDto organizationRequestDto);
     /**
      * Получить Organization по идентификатору
      *
      * @param id
      * @return
      */
-    Organization loadById(Integer id);
+    OrganizationEntity loadById(Integer id);
     /**
      * Редактировать Organization
      *
@@ -33,5 +33,5 @@ public interface OrganizationDao {
      *
      * @param organization
      */
-    void save(Organization organization);
+    void save(OrganizationEntity organization);
 }

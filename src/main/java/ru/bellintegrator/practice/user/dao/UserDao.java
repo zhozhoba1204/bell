@@ -2,7 +2,7 @@ package ru.bellintegrator.practice.user.dao;
 
 import ru.bellintegrator.practice.user.dto.UserRequestDto;
 import ru.bellintegrator.practice.user.dto.UserUpdateDto;
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ public interface UserDao {
      *
      * @return
      */
-    List<User> filter(UserRequestDto userRequestDto);
+    List<UserEntity> filter(UserRequestDto userRequestDto);
 
     /**
      * Получить юзера по id
@@ -23,7 +23,7 @@ public interface UserDao {
      * @param id
      * @return
      */
-    User loadById(Integer id);
+    UserEntity loadById(Integer id);
 
     /**
      * Редактировать юзера
@@ -37,5 +37,5 @@ public interface UserDao {
      *
      * @param user
      */
-    void save(User user);
+    void save(UserEntity user);
 }

@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.citizenship.model;
 
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Citizenship")
-public class Citizenship {
+public class CitizenshipEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -47,12 +47,12 @@ public class Citizenship {
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "citizenship_id")
-    private List<User> users;
+    private List<UserEntity> users;
 
     /**
      * Конструктор
      */
-    public Citizenship() {
+    public CitizenshipEntity() {
     }
 
     /**
@@ -60,7 +60,7 @@ public class Citizenship {
      * @param citizenshipCode
      * @param citizenshipName
      */
-    public Citizenship(String citizenshipCode, String citizenshipName) {
+    public CitizenshipEntity(String citizenshipCode, String citizenshipName) {
         this.citizenshipCode = citizenshipCode;
         this.citizenshipName = citizenshipName;
     }
@@ -93,11 +93,11 @@ public class Citizenship {
         this.citizenshipName = citizenshipName;
     }
 
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
 }

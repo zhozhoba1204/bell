@@ -2,7 +2,7 @@ package ru.bellintegrator.practice.office.dao;
 
 import ru.bellintegrator.practice.office.dto.OfficeRequestDto;
 import ru.bellintegrator.practice.office.dto.OfficeUpdateDto;
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ public interface OfficeDao {
      *
      * @return
      */
-    List<Office> filter(OfficeRequestDto officeRequestDto);
+    List<OfficeEntity> filter(OfficeRequestDto officeRequestDto);
 
     /**
      * Получить Office по идентификатору
@@ -23,7 +23,7 @@ public interface OfficeDao {
      * @param id
      * @return
      */
-    Office loadById(Integer id);
+    OfficeEntity loadById(Integer id);
 
     /**
      * Редактировать Office
@@ -37,5 +37,5 @@ public interface OfficeDao {
      *
      * @param office
      */
-    void save(Office office);
+    void save(OfficeEntity office);
 }

@@ -1,9 +1,9 @@
 package ru.bellintegrator.practice.user.dto;
 
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
-import ru.bellintegrator.practice.documents.model.DocumentInfo;
-import ru.bellintegrator.practice.office.model.Office;
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
+import ru.bellintegrator.practice.documents.model.DocumentInfoEntity;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import javax.validation.constraints.NotEmpty;
 
 public class UserSaveDto {
@@ -43,9 +43,9 @@ public class UserSaveDto {
         this.isIdentified = isIdentified;
     }
 
-    public static User getUserFromSaveDto(Office office, Citizenship citizenship, UserSaveDto userSaveDto) {
-        DocumentInfo documentInfo = new DocumentInfo(userSaveDto.docNumber, userSaveDto.docDate, userSaveDto.docName);
-        return new User(userSaveDto.firstName, userSaveDto.middleName, userSaveDto.secondName,
+    public static UserEntity getUserFromSaveDto(OfficeEntity office, CitizenshipEntity citizenship, UserSaveDto userSaveDto) {
+        DocumentInfoEntity documentInfo = new DocumentInfoEntity(userSaveDto.docNumber, userSaveDto.docDate, userSaveDto.docName);
+        return new UserEntity(userSaveDto.firstName, userSaveDto.middleName, userSaveDto.secondName,
                  userSaveDto.position, userSaveDto.phone, documentInfo, office, citizenship,
                 userSaveDto.isIdentified);
     }

@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.documents.dto;
 
-import ru.bellintegrator.practice.documents.model.DocumentType;
+import ru.bellintegrator.practice.documents.model.DocumentTypeEntity;
 
 public class DocumentDto {
     String name;
@@ -11,7 +11,7 @@ public class DocumentDto {
         this.code = code;
     }
 
-    public static DocumentDto getDtoFromDocument(DocumentType documentType){
+    public static DocumentDto getDtoFromDocument(DocumentTypeEntity documentType){
         return new DocumentDto(documentType.getDocName(),documentType.getDocCode());
     }
     public String getName() {

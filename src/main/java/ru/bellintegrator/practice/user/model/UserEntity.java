@@ -1,8 +1,8 @@
 package ru.bellintegrator.practice.user.model;
 
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
-import ru.bellintegrator.practice.documents.model.DocumentInfo;
-import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
+import ru.bellintegrator.practice.documents.model.DocumentInfoEntity;
+import ru.bellintegrator.practice.office.model.OfficeEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -21,7 +21,7 @@ import javax.persistence.FetchType;
  */
 @Entity
 @Table(name = "Usr")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -72,21 +72,21 @@ public class User {
             cascade = CascadeType.ALL,
             optional = false
     )
-    private DocumentInfo documentInfo;
+    private DocumentInfoEntity documentInfo;
 
     /**
      * Связь с Office
      */
     @ManyToOne
     @JoinColumn(name = "office_id")
-    private Office office;
+    private OfficeEntity office;
 
     /**
      * Связь с Citizenship
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "citizenship_id")
-    private Citizenship citizenship;
+    private CitizenshipEntity citizenship;
 
     /**
      * Статус идентификации
@@ -97,7 +97,7 @@ public class User {
     /**
      * Конструктор
      */
-    public User() {
+    public UserEntity() {
     }
 
     /**
@@ -109,7 +109,7 @@ public class User {
      * @param phone
      * @param isIdentified
      */
-    public User(String firstName, String middleName, String lastName, String position, String phone, boolean isIdentified) {
+    public UserEntity(String firstName, String middleName, String lastName, String position, String phone, boolean isIdentified) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -130,9 +130,9 @@ public class User {
      * @param citizenship
      * @param isIdentified
      */
-    public User(String firstName, String middleName, String lastName, String position,
-                String phone, DocumentInfo documentInfo, Office office, Citizenship citizenship,
-                boolean isIdentified) {
+    public UserEntity(String firstName, String middleName, String lastName, String position,
+                      String phone, DocumentInfoEntity documentInfo, OfficeEntity office, CitizenshipEntity citizenship,
+                      boolean isIdentified) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -192,26 +192,26 @@ public class User {
         this.phone = phone;
     }
 
-    public DocumentInfo getDocumentInfo() {
+    public DocumentInfoEntity getDocumentInfo() {
         return documentInfo;
     }
 
-    public void setDocumentInfo(DocumentInfo documentInfo) {
+    public void setDocumentInfo(DocumentInfoEntity documentInfo) {
         this.documentInfo = documentInfo;
     }
-    public Office getOffice() {
+    public OfficeEntity getOffice() {
         return office;
     }
 
-    public void setOffice(Office office) {
+    public void setOffice(OfficeEntity office) {
         this.office = office;
     }
 
-    public Citizenship getCitizenship() {
+    public CitizenshipEntity getCitizenship() {
         return citizenship;
     }
 
-    public void setCitizenship(Citizenship citizenship) {
+    public void setCitizenship(CitizenshipEntity citizenship) {
         this.citizenship = citizenship;
     }
 

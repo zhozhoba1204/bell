@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Document_type")
-public class DocumentType {
+public class DocumentTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doc_name")
@@ -38,19 +38,19 @@ public class DocumentType {
      * Список конкретных документов
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "docType")
-    private List<DocumentInfo> documents;
+    private List<DocumentInfoEntity> documents;
 
     /**
      * Конструктор для hibernate
      */
-    public DocumentType() {
+    public DocumentTypeEntity() {
     }
     /**
      * Конструктор
      * @param docName
      * @param docCode
      */
-    public DocumentType(String docName, Integer docCode) {
+    public DocumentTypeEntity(String docName, Integer docCode) {
         this.docName = docName;
         this.docCode = docCode;
     }

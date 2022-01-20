@@ -1,7 +1,7 @@
 package ru.bellintegrator.practice.documents.dao;
 
-import ru.bellintegrator.practice.documents.model.DocumentInfo;
-import ru.bellintegrator.practice.documents.model.DocumentType;
+import ru.bellintegrator.practice.documents.model.DocumentInfoEntity;
+import ru.bellintegrator.practice.documents.model.DocumentTypeEntity;
 
 import java.util.List;
 
@@ -14,14 +14,14 @@ public interface DocumentDao {
      * @param docCode
      * @return
      */
-    DocumentType loadByDocCode(Integer docCode);
+    DocumentTypeEntity loadByDocCode(Integer docCode);
 
     /**
      * Получить список документов по коду документа
      * @param docCode
      * @return
      */
-    List<DocumentInfo> loadByDocumentType(Integer docCode);
+    List<DocumentInfoEntity> loadByDocumentType(Integer docCode);
 
     /**
      * Изменить номер документа
@@ -48,5 +48,5 @@ public interface DocumentDao {
      * Получить все документы
      * @return
      */
-    List<DocumentType> all();
+    List<DocumentTypeEntity> all();
 }

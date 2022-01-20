@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.user.dto;
 
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.user.model.UserEntity;
 import javax.validation.constraints.NotEmpty;
 
 public class UserUpdateDto {
@@ -19,6 +19,9 @@ public class UserUpdateDto {
     public String docDate;
     public String citizenshipCode;
     public boolean isIdentified;
+
+    public UserUpdateDto() {
+    }
 
     public UserUpdateDto(Integer id, String firstName) {
         this.id = id;
@@ -40,7 +43,7 @@ public class UserUpdateDto {
         this.isIdentified = isIdentified;
     }
 
-    public static UserUpdateDto getUpdateDtoFromUser(User user) {
+    public static UserUpdateDto getUpdateDtoFromUser(UserEntity user) {
         return new UserUpdateDto(user.getId(),user.getOffice().getId(), user.getFirstName(),user.getLastName(),
                 user.getMiddleName(),user.getPosition(),user.getPhone(), user.getDocumentInfo().getDocName(),
                 user.getDocumentInfo().getDocNumber(),user.getDocumentInfo().getDocDate(),user.getCitizenship().getCitizenshipCode(),

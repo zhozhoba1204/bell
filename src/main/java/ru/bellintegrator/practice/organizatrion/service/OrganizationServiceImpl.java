@@ -8,7 +8,7 @@ import ru.bellintegrator.practice.organizatrion.dto.OrganizationRequestDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationResponseDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationSaveDto;
 import ru.bellintegrator.practice.organizatrion.dto.OrganizationUpdateDto;
-import ru.bellintegrator.practice.organizatrion.model.Organization;
+import ru.bellintegrator.practice.organizatrion.model.OrganizationEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 /**
@@ -29,7 +29,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public List<OrganizationResponseDto> filter(OrganizationRequestDto organizationRequestDto) {
-        List<Organization> daoList = organizationDao.filter(organizationRequestDto);
+        List<OrganizationEntity> daoList = organizationDao.filter(organizationRequestDto);
         return daoList.stream()
                 .map(OrganizationResponseDto::getDtoFromOrganization)
                 .collect(Collectors.toList());
@@ -39,7 +39,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public OrganizationUpdateDto loadById(Integer id) {
-        Organization organization = organizationDao.loadById(id);
+        OrganizationEntity organization = organizationDao.loadById(id);
         OrganizationUpdateDto result = OrganizationUpdateDto.getUpdateDtoFromOrganization(organization);
         return result;
     }
@@ -55,7 +55,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public void save(OrganizationSaveDto organizationSaveDto) {
-        Organization organization = OrganizationSaveDto.getOrganizationFromSaveDto(organizationSaveDto);
+        OrganizationEntity organization = OrganizationSaveDto.getOrganizationFromSaveDto(organizationSaveDto);
         organizationDao.save(organization);
     }
 

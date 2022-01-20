@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.citizenship.dto;
 
-import ru.bellintegrator.practice.citizenship.model.Citizenship;
+import ru.bellintegrator.practice.citizenship.model.CitizenshipEntity;
 
 public class CitizenshipDto {
     String name;
@@ -11,7 +11,7 @@ public class CitizenshipDto {
         this.code = code;
     }
 
-    public static CitizenshipDto getDtoFromCitizenship(Citizenship citizenship){
+    public static CitizenshipDto getDtoFromCitizenship(CitizenshipEntity citizenship){
         return new CitizenshipDto(citizenship.getCitizenshipName(),citizenship.getCitizenshipCode());
     }
     public String getName() {
