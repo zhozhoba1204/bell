@@ -142,7 +142,7 @@ http://localhost:8080/api/organization/save
    </br>Out:</br>
    ![](readme/postman/success.png)
 
-###Справочники
+### Справочники
 
 1. Справочник документов:</br>
     http://localhost:8080/api/docs
@@ -156,7 +156,7 @@ http://localhost:8080/api/organization/save
     ![](readme/countries.output.png)
 
 
-###При возникновении ошибки:
+### При возникновении ошибки:
    Пример out:</br>
    ![](readme/postman/error.png)
 
