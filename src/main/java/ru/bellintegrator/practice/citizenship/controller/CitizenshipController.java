@@ -23,7 +23,7 @@ public class CitizenshipController {
      *Получить справочник стран
      * @return список стран и их код
      */
-    @PostMapping("api/countries")
+    @PostMapping("api/countries/allcounries")
     public List<CitizenshipDto> all(){
         List<CitizenshipDto> result = citizenshipService.all();
         return result;
