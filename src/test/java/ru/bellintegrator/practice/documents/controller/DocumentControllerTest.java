@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.citizenship.controller;
+package ru.bellintegrator.practice.documents.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -12,10 +12,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.bellintegrator.practice.PracticeApplication;
-import ru.bellintegrator.practice.citizenship.dto.CitizenshipDto;
-import ru.bellintegrator.practice.citizenship.service.CitizenshipService;
+import ru.bellintegrator.practice.documents.dto.DocumentDto;
+import ru.bellintegrator.practice.documents.service.DocService;
 import java.util.List;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,23 +26,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "/application-test.properties")
 @Sql(scripts = {"/test-schema.sql", "/test-data.sql"})
 @AutoConfigureMockMvc
-class CitizenshipControllerTest {
+class DocumentControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private CitizenshipService citizenshipService;
+    private DocService docService;
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void allShouldReturnSuccess() throws Exception {
-        List<CitizenshipDto> list = citizenshipService.all();
-        mockMvc.perform(post("/api/countries")
+        List<DocumentDto> list = docService.all();
+        mockMvc.perform(get("/api/docs")
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].name", is(list.get(0).getName())))
-                .andExpect(jsonPath("$.data[0].code", is(list.get(0).getCode())))
-                .andExpect(jsonPath("$.data[1].name", is(list.get(1).getName())))
-                .andExpect(jsonPath("$.data[1].code", is(list.get(1).getCode())));
+                .andExpect(jsonPath("$.data[0].code", is(list.get(0).getCode())));
     }
 }

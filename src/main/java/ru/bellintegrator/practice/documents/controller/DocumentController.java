@@ -1,6 +1,9 @@
 package ru.bellintegrator.practice.documents.controller;
 
+//import io.swagger.v3.oas.annotations.Operation;
+//import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.documents.dto.DocumentDto;
@@ -10,6 +13,8 @@ import java.util.List;
 /**
  * Контроллер для работы с Document
  */
+//@Tag(name = "Контроллер документов", description = "Базовые операции с документами")
+
 @RestController
 public class DocumentController {
 
@@ -24,7 +29,8 @@ public class DocumentController {
      * Получить справочник всех документов
      * @return
      */
-    @PostMapping("api/docs")
+//    @Operation(summary = "Получить все документы")
+    @GetMapping("api/docs")
     public List<DocumentDto> all(){
         List<DocumentDto> result = docService.all();
         return result;

@@ -1,18 +1,18 @@
-INSERT INTO Organization (id, version, name, full_name, inn, kpp, address, phone, is_active)
-VALUES (1, 0, 'Polo', 'US POLO', '111', '222', 'Msk', '84950000001', true),
-       (2, 0, 'sber', 'sberbank', '111', '222', 'Msk', '84950000001', false);
+INSERT INTO Organization (version, name, full_name, inn, kpp, address, phone, is_active)
+VALUES (0, 'Polo', 'US POLO', '111', '222', 'Msk', '84950000001', true),
+       (0, 'sber', 'sberbank', '111', '222', 'Msk', '84950000001', false);
 
-INSERT INTO Office (id, version, name, org_id, address, phone, is_active)
-VALUES (2, 0, 'Fest', 1, 'Ozernaya', '84950000002', true),
-       (3, 0, 'Rio', 1, 'Ozerka', '84950000002', false);
+INSERT INTO Office (version, name, org_id, address, phone, is_active)
+VALUES (0, 'Fest', 1, 'Ozernaya', '84950000002', true),
+       (0, 'Rio', 1, 'Ozerka', '84950000002', false);
 
-INSERT INTO Citizenship (id, citizenship_code, version, citizenship_name)
-VALUES (1, '633', 0, 'РФ'),
-       (2, '222',0,'KZ');
+INSERT INTO Citizenship (citizenship_code, version, citizenship_name)
+VALUES ('633', 0, 'РФ'),
+       ('222',0,'KZ');
 
-INSERT INTO Usr (id, version, first_name, middle_name, last_name, position, phone, office_id, citizenship_id,
+INSERT INTO Usr (version, first_name, middle_name, last_name, position, phone, office_id, citizenship_id,
                  is_identified)
-VALUES (1, 0, 'Пётр', 'Петрович', 'Петров', 'store manager', '89099999999', 2, 1, true);
+VALUES (0, 'Пётр', 'Петрович', 'Петров', 'store manager', '89099999999', 2, 1, true);
 
 INSERT INTO Document_type (doc_name, version, doc_code)
 VALUES ('Паспорт', 0, 20);
